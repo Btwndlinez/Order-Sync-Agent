@@ -1,0 +1,58 @@
+{
+    "name": "order-sync-agent",
+    "displayName": "Order Sync Agent",
+    "version": "0.0.1",
+    "description": "AI-powered conversation analysis for social commerce.",
+    "author": "Antigravity",
+    "scripts": {
+        "dev": "plasmo dev",
+        "build": "plasmo build",
+        "build:dist": "node build.js",
+        "build:prod": "NODE_ENV=production node build.js",
+        "build:website": "vite build",
+        "package": "plasmo package",
+        "test": "npx tsx tests/test-prompt.ts",
+        "clean": "rm -rf dist",
+        "clean:website": "rm -rf dist-website",
+        "predeploy": "npm run build && npm run build:website",
+        "predeploy:website": "npm run build:website",
+        "deploy": "gh-pages -d build",
+        "deploy:website": "gh-pages -d dist-website"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.95.3",
+        "framer-motion": "^12.34.0",
+        "papaparse": "^5.4.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-dropzone": "^14.2.3",
+        "zustand": "^5.0.11"
+    },
+    "devDependencies": {
+        "@types/chrome": "0.0.258",
+        "@types/node": "20.10.0",
+        "@types/papaparse": "^5.3.14",
+        "@types/react": "18.2.42",
+        "@types/react-dom": "18.2.17",
+        "@vitejs/plugin-react": "^5.1.4",
+        "esbuild": "^0.19.0",
+        "gh-pages": "^6.3.0",
+        "openai": "^6.19.0",
+        "plasmo": "^0.90.5",
+        "prettier": "3.1.0",
+        "sharp": "^0.34.5",
+        "tsx": "^4.21.0",
+        "typescript": "5.3.2",
+        "vite": "^7.3.1"
+    },
+    "manifest": {
+        "permissions": [
+            "storage",
+            "activeTab"
+        ],
+        "host_permissions": [
+            "https://*/*",
+            "https://*.messenger.com/*"
+        ]
+    }
+}

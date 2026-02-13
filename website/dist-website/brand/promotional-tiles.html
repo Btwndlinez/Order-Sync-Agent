@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Sync Agent - Promotional Tiles</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    
+    .tile-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+      background: #f8fafc;
+    }
+    
+    .tile {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    /* Small Tile: 440x280 */
+    .tile-440 {
+      width: 440px;
+      height: 280px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Medium Tile: 920x680 */
+    .tile-920 {
+      width: 920px;
+      height: 680px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Large Tile: 1400x560 */
+    .tile-1400 {
+      width: 1400px;
+      height: 560px;
+      padding: 48px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    
+    /* Tile 1: Automated Classification */
+    .tile-classification {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+    .tile-classification .badge {
+      background: #6366f1;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: fit-content;
+    }
+    .tile-classification h2 {
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 16px 0 8px;
+    }
+    .tile-classification p {
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .tile-classification .preview-box {
+      margin-top: auto;
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #334155;
+    }
+    .tile-classification .preview-line {
+      height: 12px;
+      background: #334155;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .tile-classification .preview-line.short { width: 60%; }
+    .tile-classification .preview-line.medium { width: 80%; }
+    .tile-classification .highlight {
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+      height: 20px;
+      border-radius: 4px;
+      margin-top: 12px;
+    }
+    
+    /* Tile 2: One-Click Injection */
+    .tile-injection {
+      background: linear-gradient(135deg, #1877F2 0%, #0d6efd 100%);
+    }
+    .tile-injection .badge {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: fit-content;
+    }
+    .tile-injection h2 {
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 16px 0 8px;
+    }
+    .tile-injection p {
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .tile-injection .chat-bubble {
+      margin-top: auto;
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 80%;
+    }
+    .tile-injection .chat-text {
+      color: #1e293b;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .tile-injection .chat-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .tile-injection .action-btn {
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    /* Tile 3: Marketplace ROI */
+    .tile-roi {
+      background: white;
+    }
+    .tile-roi .badge {
+      background: #10B981;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: fit-content;
+    }
+    .tile-roi h2 {
+      color: #1e293b;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 16px 0 8px;
+    }
+    .tile-roi p {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .tile-roi .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: auto;
+    }
+    .tile-roi .stat-card {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .tile-roi .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1877F2;
+    }
+    .tile-roi .stat-label {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    
+    /* Logo watermark */
+    .logo-watermark {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.6;
+    }
+    .logo-watermark .logo-icon {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 6px;
+    }
+    .logo-watermark span {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="tile-container">
+    
+    <!-- Tile 1: Automated Classification (440x280) -->
+    <div class="tile tile-440 tile-classification">
+      <div class="badge">Vector Engine</div>
+      <h2>Automated Classification</h2>
+      <p>AI-powered intent detection extracts order details from any conversation automatically.</p>
+      <div class="preview-box">
+        <div class="preview-line medium"></div>
+        <div class="preview-line short"></div>
+        <div class="highlight"></div>
+      </div>
+      <div class="logo-watermark">
+        <div class="logo-icon"></div>
+        <span>Order Sync Agent</span>
+      </div>
+    </div>
+    
+    <!-- Tile 2: One-Click Injection (920x680) -->
+    <div class="tile tile-920 tile-injection">
+      <div class="badge">Push to Chat</div>
+      <h2>One-Click Injection</h2>
+      <p>Generate checkout links and inject them directly into WhatsApp or Messenger in seconds.</p>
+      <div class="chat-bubble">
+        <div class="chat-text">Hi! I'd like to order the vintage leather jacket in size M. Total $125?</div>
+        <div class="chat-actions">
+          <button class="action-btn">✓ Link Generated</button>
+        </div>
+      </div>
+      <div class="logo-watermark">
+        <div class="logo-icon"></div>
+        <span>Order Sync Agent</span>
+      </div>
+    </div>
+    
+    <!-- Tile 3: Marketplace ROI (1400x560) -->
+    <div class="tile tile-1400 tile-roi">
+      <div style="flex: 1;">
+        <div class="badge">Analytics Dashboard</div>
+        <h2>Marketplace ROI</h2>
+        <p>Track your order volume, revenue, and time saved with detailed analytics.</p>
+      </div>
+      <div style="flex: 1.5;">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">847</div>
+            <div class="stat-label">Orders This Month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">$42.3K</div>
+            <div class="stat-label">Revenue Generated</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">63h</div>
+            <div class="stat-label">Time Saved</div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-watermark">
+        <div class="logo-icon"></div>
+        <span>Order Sync Agent</span>
+      </div>
+    </div>
+    
+  </div>
+</body>
+</html>

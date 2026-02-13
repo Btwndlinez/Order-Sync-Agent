@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Supabase secrets
+.env
+supabase/.env
+
+# Build outputs
+build/
+dist/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <span class="logo">Order Sync</span>
+      <span class="status-dot online"></span>
+    </header>
+
+    <main id="content">
+      <div id="loading" class="hidden">
+        <div class="spinner"></div>
+        <p>Analyzing conversation...</p>
+      </div>
+
+      <div id="error-state" class="hidden">
+        <p class="error-text"></p>
+        <button id="btn-retry" class="retry-btn">Try Again</button>
+      </div>
+
+      <div id="suggestion-card" class="hidden">
+        <div class="badge">Purchase Intent Detected</div>
+        <h2 id="prod-title">Product Name</h2>
+        <div class="details">
+          <span id="prod-variant">Variant</span> • <span id="prod-qty">Qty</span>
+        </div>
+        <div class="context-quote">
+          <p id="trigger-text">"Quote from buyer..."</p>
+        </div>
+        <button id="btn-generate" class="primary-btn">Generate Checkout Link</button>
+      </div>
+
+      <div id="success-card" class="hidden">
+        <div class="success-icon">✓</div>
+        <h3>Checkout Ready!</h3>
+        <input type="text" id="checkout-url" readonly>
+        <button id="btn-copy" class="primary-btn">Copy Link</button>
+      </div>
+
+      <div id="empty-state" class="hidden">
+        <p class="empty-title">No clear purchase intent found.</p>
+        <p class="empty-subtitle">Keep chatting with the buyer and try again.</p>
+        <button id="btn-refresh" class="retry-btn">Refresh</button>
+      </div>
+    </main>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

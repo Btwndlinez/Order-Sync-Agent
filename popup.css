@@ -1,0 +1,282 @@
+/* Order Sync Agent - Popup Styles
+ * Facebook Messenger-inspired design system
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  min-height: 400px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #1877f2;
+  color: white;
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00c851;
+  box-shadow: 0 0 4px rgba(0, 200, 81, 0.5);
+}
+
+.status-dot.offline {
+  background: #ff4444;
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Utility */
+.hidden {
+  display: none !important;
+}
+
+/* Loading State */
+#loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1877f2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#loading p {
+  margin-top: 16px;
+  color: #65676b;
+  font-size: 14px;
+}
+
+/* Error State */
+#error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.error-text {
+  color: #ff4444;
+  font-size: 14px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.retry-btn {
+  padding: 10px 20px;
+  background: #e4e6eb;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #050505;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.retry-btn:hover {
+  background: #d8dadf;
+}
+
+/* Suggestion Card */
+#suggestion-card {
+  background: #f0f2f5;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #1877f2;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+#prod-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #050505;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.details {
+  font-size: 13px;
+  color: #65676b;
+  margin-bottom: 16px;
+}
+
+.context-quote {
+  background: white;
+  border-left: 3px solid #1877f2;
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 16px;
+}
+
+#trigger-text {
+  font-size: 13px;
+  color: #65676b;
+  font-style: italic;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Success Card */
+#success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #00c851;
+  color: white;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0, 200, 81, 0.3);
+}
+
+#success-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #050505;
+  margin: 0 0 16px 0;
+}
+
+#checkout-url {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dddfe2;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #65676b;
+  margin-bottom: 16px;
+  background: #f0f2f5;
+  word-break: break-all;
+  text-align: center;
+}
+
+/* Empty State */
+#empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #050505;
+  margin: 0 0 8px 0;
+}
+
+.empty-subtitle {
+  font-size: 13px;
+  color: #65676b;
+  margin: 0 0 20px 0;
+}
+
+/* Buttons */
+.primary-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 4px rgba(24, 119, 242, 0.3);
+}
+
+.primary-btn:hover {
+  background: #166fe5;
+}
+
+.primary-btn:disabled {
+  background: #bcc0c4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bcc0c4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}

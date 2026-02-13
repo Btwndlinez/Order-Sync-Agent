@@ -1,0 +1,477 @@
+{
+    "test_cases": [
+        {
+            "id": "test_001",
+            "name": "Perfect Match - Single Item",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "Is the red sweatshirt still available?",
+                    "timestamp": "2024-02-07T10:00:00Z"
+                },
+                {
+                    "role": "seller",
+                    "text": "Yes! What size do you need?",
+                    "timestamp": "2024-02-07T10:01:00Z"
+                },
+                {
+                    "role": "buyer",
+                    "text": "Large please. I'll take it",
+                    "timestamp": "2024-02-07T10:02:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_red_sweat",
+                    "title": "Red Crewneck Sweatshirt",
+                    "variants": [
+                        {
+                            "id": "var_s",
+                            "title": "Small",
+                            "price": "35.00",
+                            "option1": "Small"
+                        },
+                        {
+                            "id": "var_m",
+                            "title": "Medium",
+                            "price": "35.00",
+                            "option1": "Medium"
+                        },
+                        {
+                            "id": "var_l",
+                            "title": "Large",
+                            "price": "35.00",
+                            "option1": "Large"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": true,
+                "confidence": 0.92,
+                "product_id": "prod_red_sweat",
+                "variant_id": "var_l",
+                "quantity": 1,
+                "total_value": 35.00
+            }
+        },
+        {
+            "id": "test_002",
+            "name": "Multiple Quantities",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "How much for the beanie?",
+                    "timestamp": "2024-02-07T11:00:00Z"
+                },
+                {
+                    "role": "seller",
+                    "text": "$25 each",
+                    "timestamp": "2024-02-07T11:01:00Z"
+                },
+                {
+                    "role": "buyer",
+                    "text": "Can I get 3?",
+                    "timestamp": "2024-02-07T11:02:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_beanie",
+                    "title": "Classic Beanie",
+                    "variants": [
+                        {
+                            "id": "var_default",
+                            "title": "Default",
+                            "price": "25.00"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": true,
+                "confidence": 0.90,
+                "product_id": "prod_beanie",
+                "variant_id": "var_default",
+                "quantity": 3,
+                "total_value": 75.00
+            }
+        },
+        {
+            "id": "test_003",
+            "name": "Ambiguous - Just Browsing",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "Do you have any jackets?",
+                    "timestamp": "2024-02-07T12:00:00Z"
+                },
+                {
+                    "role": "seller",
+                    "text": "Yes, I have bomber jackets and denim jackets",
+                    "timestamp": "2024-02-07T12:01:00Z"
+                },
+                {
+                    "role": "buyer",
+                    "text": "What sizes?",
+                    "timestamp": "2024-02-07T12:02:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_bomber",
+                    "title": "Black Bomber Jacket",
+                    "variants": [
+                        {
+                            "id": "var_m",
+                            "title": "Medium",
+                            "price": "85.00"
+                        },
+                        {
+                            "id": "var_l",
+                            "title": "Large",
+                            "price": "85.00"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": false,
+                "confidence": 0.30,
+                "product_id": null,
+                "variant_id": null,
+                "quantity": 0,
+                "total_value": null
+            }
+        },
+        {
+            "id": "test_004",
+            "name": "Variant Mismatch - Product Exists, Variant Doesn't",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "I want the blue hoodie in XL",
+                    "timestamp": "2024-02-07T13:00:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_blue_hoodie",
+                    "title": "Blue Pullover Hoodie",
+                    "variants": [
+                        {
+                            "id": "var_s",
+                            "title": "Small",
+                            "price": "50.00"
+                        },
+                        {
+                            "id": "var_m",
+                            "title": "Medium",
+                            "price": "50.00"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": true,
+                "confidence": 0.55,
+                "product_id": "prod_blue_hoodie",
+                "variant_id": null,
+                "quantity": 1
+            }
+        },
+        {
+            "id": "test_005",
+            "name": "Complex Multi-Option Variant",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "Do you have the Air Max in size 9?",
+                    "timestamp": "2024-02-07T14:00:00Z"
+                },
+                {
+                    "role": "seller",
+                    "text": "Yes, what color?",
+                    "timestamp": "2024-02-07T14:01:00Z"
+                },
+                {
+                    "role": "buyer",
+                    "text": "White and red. I'll take them",
+                    "timestamp": "2024-02-07T14:02:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_airmax",
+                    "title": "Nike Air Max 90",
+                    "variants": [
+                        {
+                            "id": "var_9_wr",
+                            "title": "Size 9 / White-Red",
+                            "price": "130.00",
+                            "option1": "9",
+                            "option2": "White-Red"
+                        },
+                        {
+                            "id": "var_9_bb",
+                            "title": "Size 9 / Black-Blue",
+                            "price": "130.00",
+                            "option1": "9",
+                            "option2": "Black-Blue"
+                        },
+                        {
+                            "id": "var_10_wr",
+                            "title": "Size 10 / White-Red",
+                            "price": "130.00",
+                            "option1": "10",
+                            "option2": "White-Red"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": true,
+                "confidence": 0.93,
+                "product_id": "prod_airmax",
+                "variant_id": "var_9_wr",
+                "quantity": 1,
+                "total_value": 130.00
+            }
+        },
+        {
+            "id": "test_006",
+            "name": "Changed Mind - Should Cancel Intent",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "I'll take the black tee in medium",
+                    "timestamp": "2024-02-07T15:00:00Z"
+                },
+                {
+                    "role": "seller",
+                    "text": "Great! I'll send you the checkout link",
+                    "timestamp": "2024-02-07T15:01:00Z"
+                },
+                {
+                    "role": "buyer",
+                    "text": "Actually never mind, I changed my mind",
+                    "timestamp": "2024-02-07T15:02:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_tee",
+                    "title": "Black T-Shirt",
+                    "variants": [
+                        {
+                            "id": "var_m",
+                            "title": "Medium",
+                            "price": "20.00"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": false,
+                "confidence": 0.10,
+                "product_id": null,
+                "variant_id": null,
+                "quantity": 0
+            }
+        },
+        {
+            "id": "test_007",
+            "name": "Fuzzy Product Match",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "You got those yeezys in a 10?",
+                    "timestamp": "2024-02-07T16:00:00Z"
+                },
+                {
+                    "role": "seller",
+                    "text": "Yep!",
+                    "timestamp": "2024-02-07T16:01:00Z"
+                },
+                {
+                    "role": "buyer",
+                    "text": "Cool I'll grab em",
+                    "timestamp": "2024-02-07T16:02:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_yzy",
+                    "title": "Yeezy Boost 350",
+                    "variants": [
+                        {
+                            "id": "var_9",
+                            "title": "Size 9",
+                            "price": "220.00"
+                        },
+                        {
+                            "id": "var_10",
+                            "title": "Size 10",
+                            "price": "220.00"
+                        },
+                        {
+                            "id": "var_11",
+                            "title": "Size 11",
+                            "price": "220.00"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": true,
+                "confidence": 0.89,
+                "product_id": "prod_yzy",
+                "variant_id": "var_10",
+                "quantity": 1,
+                "total_value": 220.00
+            }
+        },
+        {
+            "id": "test_008",
+            "name": "Multiple Products in Catalog - Must Choose Correct One",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "I want the crewneck",
+                    "timestamp": "2024-02-07T17:00:00Z"
+                },
+                {
+                    "role": "seller",
+                    "text": "Which color?",
+                    "timestamp": "2024-02-07T17:01:00Z"
+                },
+                {
+                    "role": "buyer",
+                    "text": "Navy. Large",
+                    "timestamp": "2024-02-07T17:02:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_crew_gray",
+                    "title": "Gray Crewneck Sweatshirt",
+                    "variants": [
+                        {
+                            "id": "var_l",
+                            "title": "Large",
+                            "price": "48.00"
+                        }
+                    ]
+                },
+                {
+                    "id": "prod_crew_navy",
+                    "title": "Navy Crewneck Sweatshirt",
+                    "variants": [
+                        {
+                            "id": "var_m",
+                            "title": "Medium",
+                            "price": "48.00"
+                        },
+                        {
+                            "id": "var_l",
+                            "title": "Large",
+                            "price": "48.00"
+                        }
+                    ]
+                },
+                {
+                    "id": "prod_crew_black",
+                    "title": "Black Crewneck Sweatshirt",
+                    "variants": [
+                        {
+                            "id": "var_l",
+                            "title": "Large",
+                            "price": "48.00"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": true,
+                "confidence": 0.91,
+                "product_id": "prod_crew_navy",
+                "variant_id": "var_l",
+                "quantity": 1,
+                "total_value": 48.00
+            }
+        },
+        {
+            "id": "test_009",
+            "name": "Implicit Quantity - Pair",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "Can I get a pair of the white socks?",
+                    "timestamp": "2024-02-07T18:00:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_socks",
+                    "title": "White Athletic Socks",
+                    "variants": [
+                        {
+                            "id": "var_default",
+                            "title": "One Size",
+                            "price": "12.00"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": true,
+                "confidence": 0.87,
+                "product_id": "prod_socks",
+                "variant_id": "var_default",
+                "quantity": 2,
+                "total_value": 24.00
+            }
+        },
+        {
+            "id": "test_010",
+            "name": "Price Inquiry Only - No Intent",
+            "conversation": [
+                {
+                    "role": "buyer",
+                    "text": "How much is the leather jacket?",
+                    "timestamp": "2024-02-07T19:00:00Z"
+                },
+                {
+                    "role": "seller",
+                    "text": "$120",
+                    "timestamp": "2024-02-07T19:01:00Z"
+                },
+                {
+                    "role": "buyer",
+                    "text": "Ok thanks",
+                    "timestamp": "2024-02-07T19:02:00Z"
+                }
+            ],
+            "catalog": [
+                {
+                    "id": "prod_jacket",
+                    "title": "Leather Bomber Jacket",
+                    "variants": [
+                        {
+                            "id": "var_m",
+                            "title": "Medium",
+                            "price": "120.00"
+                        }
+                    ]
+                }
+            ],
+            "expected": {
+                "intent_detected": false,
+                "confidence": 0.25,
+                "product_id": null,
+                "variant_id": null,
+                "quantity": 0
+            }
+        }
+    ]
+}

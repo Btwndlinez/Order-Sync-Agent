@@ -1,0 +1,10 @@
+
+> order-sync-agent@0.0.1 build
+> plasmo build
+
+≡ƒƒú Plasmo v0.90.5
+≡ƒö┤ The Browser Extension Framework
+≡ƒö╡ INFO   | Prepare to bundle the extension...
+≡ƒö╡ INFO   | Building for target: chrome-mv3
+≡ƒö╡ INFO   | Loaded environment variables from: [ '.env' ]
+≡ƒö┤ ERROR  | Failed to resolve 'popup.css' from './.plasmo/popup.html'

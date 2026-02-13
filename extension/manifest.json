@@ -1,0 +1,61 @@
+{
+    "manifest_version": 3,
+    "name": "Order Sync Agent",
+    "short_name": "Order Sync",
+    "version": "1.0.0",
+    "description": "AI-powered order extraction for social commerce. Sync orders from WhatsApp & Messenger instantly - no copy-paste errors, no account risks.",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting",
+        "sidePanel"
+    ],
+    "host_permissions": [
+        "https://www.messenger.com/*",
+        "https://messenger.com/*",
+        "https://*.messenger.com/*",
+        "https://www.whatsapp.com/*",
+        "https://whatsapp.com/*",
+        "https://*.whatsapp.com/*",
+        "https://*.supabase.co/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.whatsapp.com/*",
+                "https://whatsapp.com/*",
+                "https://*.whatsapp.com/*"
+            ],
+            "js": ["content_scripts/whatsapp.js"],
+            "run_at": "document_idle",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://www.messenger.com/*",
+                "https://messenger.com/*",
+                "https://*.messenger.com/*"
+            ],
+            "js": ["content_scripts/messenger.js"],
+            "run_at": "document_idle",
+            "all_frames": true
+        }
+    ],
+    "side_panel": {
+        "default_path": "panel/panel.html"
+    },
+    "action": {
+        "default_title": "Order Sync Agent"
+    },
+    "icons": {
+        "16": "../public/brand/icon-16.png",
+        "48": "../public/brand/icon-48.png",
+        "128": "../public/brand/icon-128.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://*.supabase.co https://generativelanguage.googleapis.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';"
+    }
+}
