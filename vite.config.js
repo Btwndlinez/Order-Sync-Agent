@@ -6,6 +6,7 @@ dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig({
   plugins: [react()],
+  base: './',
   root: './website',
   build: {
     outDir: './dist-website',

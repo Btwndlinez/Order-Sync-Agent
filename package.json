@@ -17,7 +17,7 @@
         "predeploy": "npm run build && npm run build:website",
         "predeploy:website": "npm run build:website",
         "deploy": "gh-pages -d build",
-        "deploy:website": "gh-pages -d dist-website"
+        "deploy:website": "gh-pages -d website/dist-website --nojekyll"
     },
     "dependencies": {
         "@supabase/supabase-js": "^2.95.3",
