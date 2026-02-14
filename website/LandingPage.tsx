@@ -299,13 +299,18 @@ export default function LandingPage() {
       <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 md:py-4">
-            <a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline hover:opacity-90 transition-opacity">
+            <a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline group">
               <img 
                 src="assets/sync-logo.svg" 
                 alt="Order Sync Agent" 
                 className="block h-10 w-auto"
               />
-              <span className="text-white font-bold text-xl">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
+              <span className="text-xl font-bold tracking-tight" style={{
+                color: 'white',
+                textShadow: '-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000'
+              }}>
+                Order Sync <span style={{ color: '#00FFC2' }}>Agent</span>
+              </span>
             </a>
 
             {/* Desktop Navigation */}
@@ -531,83 +536,18 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-8 px-4">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Status Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 py-3 mb-6 border-b border-slate-800">
-            <span className="flex items-center gap-2 text-sm text-slate-400">
-              <span>Last Updated: Feb 2026</span>
-            </span>
-          </div>
+      <footer className="max-w-7xl mx-auto mt-24 pt-12 border-t border-white/5 text-center text-gray-500 text-sm">
+        <div className="flex flex-col items-center mb-6">
+          <img src="assets/sync-logo.svg" alt="Order Sync Agent" className="h-8 w-auto mb-3 opacity-90" />
+          <h3 className="text-white font-bold text-lg">Order Sync Agent</h3>
+          <p className="mt-2 text-xs">© 2026 Order Sync Agent. Built for the modern Merchant.</p>
+        </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
-            <div className="col-span-2 md:col-span-1">
-              <div className="footer-branding">
-                <img 
-                  src="assets/sync-logo.svg" 
-                  alt="Order Sync Agent" 
-                  className="block h-8 w-auto"
-                />
-                <span className="font-semibold text-xl text-white block mb-3">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
-              </div>
-              <p className="text-sm mb-4">
-                Automate customer service data extraction and checkout generation.
-              </p>
-              <p className="text-xs text-slate-500">
-                Order Sync Agent is not affiliated with Meta, Facebook, or WhatsApp.
-              </p>
-              <p className="text-xs text-gray-500 mt-2">© 2026 Order Sync Agent</p>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-3">Product</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="#about" className="hover:text-white transition-colors">About</a>
-                </li>
-                <li>
-                  <a href="#demo" className="hover:text-white transition-colors">How It Works</a>
-                </li>
-                <li>
-                  <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-3">Support</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">Help Center</a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">Contact Us</a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">Status</a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-3">Legal</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-slate-800 pt-6 text-center text-sm">
-            <p>&copy; 2024 Order Sync Agent. All rights reserved.</p>
-          </div>
+        <div className="max-w-2xl mx-auto px-4">
+          <p className="text-[10px] leading-relaxed opacity-60 uppercase tracking-widest mb-4">Cancel anytime</p>
+          <p className="text-[11px] leading-relaxed opacity-50">
+            Order Sync Agent is not affiliated with Meta, Facebook, or WhatsApp.
+          </p>
         </div>
       </footer>
 

@@ -619,6 +619,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   logoText: {
     fontSize: "16px",
     fontWeight: 700,
+    color: "white",
+    textShadow: "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000",
   },
   logoAccent: {
     color: "#00FFC2",
