@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Order Sync Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        // LocalStorage for essential functional cookies only (Stripe auth tokens)
+        window.addEventListener('DOMContentLoaded', function() {
+            // No cookie consent banner needed - using LocalStorage for auth
+            console.log('Privacy: LocalStorage initialized, no cookie consent required');
+            
+            // Set up essential Stripe auth if present
+            const stripeAuth = localStorage.getItem('stripe_auth_token');
+            if (stripeAuth) {
+                console.log('Stripe auth token found in LocalStorage');
+            }
+        });
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <!-- Rocket Logo -->
+                    <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-emerald-400 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7.14 1 0.001.169 1.409l5-1.429A1 1 0 009.15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5-1.428a1 1 0 001.17-1.408l-7-14A1 1 0 009.15.571z"/>
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xl">Order Sync Agent</span>
+                </div>
+                <a href="/" class="text-indigo-600 hover:text-indigo-700 font-medium">← Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-xl shadow-sm p-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
+            
+            <div class="prose max-w-none">
+                <p class="text-gray-600 mb-6">Last updated: February 11, 2026</p>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Information We Collect</h2>
+                <p class="text-gray-600 mb-4">Order Sync Agent is designed with privacy-first principles. We only collect information that is essential for providing our AI-powered checkout generation service.</p>
+                
+                <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Essential Data Only</h3>
+                <p class="text-gray-600 mb-4">We use LocalStorage for essential functionality only - no cookie consent banner required at launch.</p>
+                
+                <ul class="list-disc pl-6 text-gray-600 mb-6">
+                    <li><strong>Messenger Conversation Analysis:</strong> We analyze message content locally in your browser to detect purchase intent and match products from your catalog.</li>
+                    <li><strong>Authentication Tokens:</strong> Secure Stripe tokens are stored in LocalStorage for checkout generation functionality.</li>
+                    <li><strong>Usage Statistics:</strong> Limited analytics for billing and subscription management (links generated, plan type).</li>
+                    <li><strong>Product Catalog:</strong> Your product data is processed securely in Supabase for AI matching - no personal data stored.</li>
+                </ul>
+                
+                <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">How We Use Your Information</h3>
+                <ul class="list-disc pl-6 text-gray-600 mb-6">
+                    <li>Generate personalized product recommendations based on conversation content</li>
+                    <li>Create accurate Stripe checkout links for products you select</li>
+                    <li>Manage subscription and usage limits for billing purposes</li>
+                    <li>Improve AI matching algorithms and service performance</li>
+                </ul>
+                
+                <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">Data Storage & Security</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Local Storage (Privacy-First)</h4>
+                        <p class="text-gray-600 mb-2"><strong>Essential Only:</strong> All conversation data is stored locally in your browser using LocalStorage. We do not use cookies that require consent banners.</p>
+                        <p class="text-gray-600"><strong>Encrypted:</strong> Data is encrypted at rest and only accessible by the extension.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Cloud Storage (Supabase)</h4>
+                        <p class="text-gray-600 mb-2"><strong>Secure:</strong> Product catalog and authentication data is stored securely in Supabase with encryption in transit and at rest.</p>
+                        <p class="text-gray-600 mb-2"><strong>Minimal:</strong> Only essential business data (product info, subscription status) - no conversation content.</p>
+                        <p class="text-gray-600"><strong>PCI Compliant:</strong> All payment processing is handled by Stripe - we never store credit card information.</p>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">Data Sharing</h3>
+                <p class="text-gray-600 mb-4">We do not sell, rent, or share your personal information with third parties for marketing purposes. We only share data as necessary to:</p>
+                <ul class="list-disc pl-6 text-gray-600 mb-6">
+                    <li><strong>Payment Processing:</strong> Process payments through Stripe's secure platform</li>
+                    <li><strong>Service Operation:</strong> Store data securely in Supabase for service functionality</li>
+                    <li><strong>Legal Compliance:</strong> Comply with applicable laws and regulations</li>
+                </ul>
+                
+                <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">Your Rights</h3>
+                <ul class="list-disc pl-6 text-gray-600 mb-6">
+                    <li><strong>Access:</strong> Request a copy of your data at any time</li>
+                    <li><strong>Correction:</strong> Request corrections to inaccurate information</li>
+                    <li><strong>Deletion:</strong> Request deletion of your account and all associated data</li>
+                    <li><strong>Export:</strong> Export your data in a portable format</li>
+                    <li><strong>Opt-out:</strong> Disable analytics and data collection from extension settings</li>
+                </ul>
+                
+                <h3 class="text-xl font-semibold text-gray-900 mt-8 mb-3">Data Retention</h3>
+                <ul class="list-disc pl-6 text-gray-600 mb-6">
+                    <li><strong>Local Data:</strong> Stored in LocalStorage until you uninstall the extension or clear browser data.</li>
+                    <li><strong>Account Data:</strong> Retained until you request deletion. Usage logs are kept for 12 months for billing and analytics.</li>
+                    <li><strong>Right to Delete:</strong> You can delete your account and all associated data at any time.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <div class="w-6 h-6 bg-gradient-to-br from-indigo-600 to-emerald-400 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7.14 1 0.001.169 1.409l5-1.429A1 1 0 009.15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5-1.428a1 1 0 001.17-1.408l-7-14A1 1 0 009.15.571z"/>
+                        </svg>
+                    </div>
+                    <span class="text-gray-600">© 2026 Order Sync Agent. All rights reserved.</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="/privacy" class="text-gray-600 hover:text-indigo-600">Privacy Policy</a>
+                    <a href="/terms" class="text-gray-600 hover:text-indigo-600">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
