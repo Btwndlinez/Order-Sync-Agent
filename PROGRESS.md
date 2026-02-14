@@ -113,6 +113,96 @@ npm run deploy            # Deploy extension to GitHub Pages
 
 ---
 
+## 2026-02-14 GitHub Pages Deployment Fix ✅
+
+### vite.config.js Base Path Configuration
+
+**File:** `vite.config.js`
+
+```javascript
+export default defineConfig({
+  plugins: [react()],
+  // CRITICAL: This matches your GitHub repo name exactly
+  base: '/Order-Sync-Agent/',
+  root: './website',
+  build: {
+    outDir: './dist-website',
+  },
+});
+```
+
+### Header Branding with Home Link
+
+**File:** `website/LandingPage.tsx`
+
+```tsx
+<a href="./index.html" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+  <img 
+    src="assets/sync-logo.png" 
+    alt="Order Sync Agent" 
+    className="h-10 w-auto block"
+  />
+  <span className="text-white font-bold text-xl">
+    OrderSync<span className="text-[#00FFC2]">Agent</span>
+  </span>
+</a>
+```
+
+### Footer Branding with Block Class
+
+```tsx
+<div className="footer-branding">
+  <img 
+    src="assets/sync-logo.png" 
+    alt="Order Sync Agent" 
+    className="h-8 w-auto block mb-3 opacity-80"
+  />
+  <span className="font-semibold text-xl text-white block mb-3">
+    OrderSync<span className="text-[#00FFC2]">Agent</span>
+  </span>
+</div>
+```
+
+### Extension Popup Logo Update
+
+**File:** `extension/popup.tsx`
+
+```tsx
+<header style={styles.header}>
+  <div style={styles.logo}>
+    <img 
+      src="../assets/sync-logo.png" 
+      alt="Order Sync Agent" 
+      style={styles.logoImage}
+    />
+    <span style={styles.logoText}>
+      Order Sync <span style={styles.logoAccent}>Agent</span>
+    </span>
+  </div>
+</header>
+```
+
+### Key Fixes
+
+- **Base Path:** Set to `/Order-Sync-Agent/` for GitHub Pages
+- **Header Link:** Wrapped brand in `<a href="./index.html">` for navigation
+- **Image Display:** Added `block` class to all images to prevent hiding
+- **Logo Consistency:** Replaced all instances with `assets/sync-logo.png`
+- **Mint Accent:** Added `#00FFC2` color for "Agent" suffix across all components
+
+### Deploy Commands
+
+```bash
+npm run build          # Generate dist folder with new paths
+npm run deploy:website # Push dist folder to GitHub Pages
+```
+
+### Status: ✅ **GITHUB PAGES DEPLOYMENT FIXED**
+- **Live URL:** https://btwndlinez.github.io/Order-Sync-Agent/
+- **Last Updated:** 2026-02-14
+
+---
+
 ## 2026-02-13 Framer Motion Tab Navigation & Sync Button ✅
 
 ### Installation
