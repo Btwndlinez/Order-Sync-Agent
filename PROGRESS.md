@@ -2,6 +2,31 @@
 
 ---
 
+## 🚀 GitHub Deployment ✅
+
+### Live Website
+- **URL**: https://btwndlinez.github.io/Order-Sync-Agent/
+- **Repository**: https://github.com/Btwndlinez/Order-Sync-Agent
+
+### Deploy Commands
+```bash
+npm run deploy:website    # Deploy website to GitHub Pages
+npm run deploy            # Deploy extension to GitHub Pages
+```
+
+### Files Deployed
+- `website/dist-website/index.html` - Landing page
+- `website/dist-website/manifest.json` - Chrome extension manifest
+- `website/dist-website/logo.svg` - Rabbit logo
+- `website/dist-website/privacy.html` - Privacy policy
+- `website/dist-website/terms.html` - Terms of service
+
+### Status: ✅ **DEPLOYED TO GITHUB PAGES**
+
+---
+
+---
+
 ## 2026-02-13 Framer Motion Tab Navigation & Sync Button ✅
 
 ### Installation
