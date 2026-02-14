@@ -63,6 +63,50 @@ npm run deploy            # Deploy extension to GitHub Pages
 - **Footer:** Updated copyright to 2026 with centered branding
 - **Deployed:** Live at https://btwndlinez.github.io/Order-Sync-Agent/
 
+### Logo Component Variations
+
+#### 1. Header with Hover Effect
+```html
+<a href="/" class="flex items-center space-x-3 group transition-opacity hover:opacity-90">
+    <img src="assets/sync-logo.png" alt="Order Sync Agent Logo" class="h-10 w-auto">
+    
+    <span class="text-xl font-bold tracking-tight text-white">
+        OrderSync<span class="text-[#00FFC2]">Agent</span>
+    </span>
+</a>
+```
+
+#### 2. Simple Header Link
+```html
+<a href="index.html" class="flex items-center gap-3 no-underline">
+  <img src="assets/sync-logo.png" alt="Order Sync Agent" class="h-10 w-auto block">
+  <span class="text-white font-bold text-xl">Order Sync <span class="text-[#00FFC2]">Agent</span></span>
+</a>
+```
+
+#### 3. Centered Branding
+```html
+<div class="flex flex-col items-center">
+  <img src="assets/sync-logo.png" alt="Order Sync Agent" class="h-8 w-auto mb-3 opacity-90">
+  <h3 class="text-white font-bold text-lg">Order Sync Agent</h3>
+</div>
+```
+
+#### 4. Extension Popup Header
+```tsx
+// Inside your Popup component
+<div className="flex items-center gap-2 mb-6 border-b border-white/10 pb-4">
+  <img 
+    src={logo} // or "../assets/sync-logo.png"
+    alt="Order Sync Agent" 
+    className="h-8 w-auto" 
+  />
+  <h1 className="text-lg font-bold">
+    Order Sync <span className="text-[#00FFC2]">Agent</span>
+  </h1>
+</div>
+```
+
 ### Status: ✅ **BRANDING UPDATE COMPLETE**
 
 ---
