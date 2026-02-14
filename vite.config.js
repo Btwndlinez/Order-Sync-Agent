@@ -6,7 +6,8 @@ dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  // CRITICAL: This matches your GitHub repo name exactly
+  base: '/Order-Sync-Agent/',
   root: './website',
   build: {
     outDir: './dist-website',

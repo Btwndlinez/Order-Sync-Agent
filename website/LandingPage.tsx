@@ -299,14 +299,16 @@ export default function LandingPage() {
       <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 md:py-4">
-            <div className="flex items-center gap-3">
+            <a href="./index.html" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
               <img 
                 src="assets/sync-logo.png" 
                 alt="Order Sync Agent" 
-                className="h-10 w-auto"
+                className="h-10 w-auto block"
               />
-              <span className="font-semibold text-xl text-slate-900">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
-            </div>
+              <span className="text-white font-bold text-xl">
+                OrderSync<span className="text-[#00FFC2]">Agent</span>
+              </span>
+            </a>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
@@ -546,7 +548,7 @@ export default function LandingPage() {
                 <img 
                   src="assets/sync-logo.png" 
                   alt="Order Sync Agent" 
-                  className="h-8 w-auto mb-3 opacity-80"
+                  className="h-8 w-auto block mb-3 opacity-80"
                 />
                 <span className="font-semibold text-xl text-white block mb-3">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
               </div>

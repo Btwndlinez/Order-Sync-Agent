@@ -270,8 +270,12 @@ function PopupContent() {
       {/* Header */}
       <header style={styles.header}>
         <div style={styles.logo}>
-          <span style={styles.logoIcon}>🚀</span>
-          <span style={styles.logoText}>Order Sync</span>
+          <img 
+            src="../assets/sync-logo.png" 
+            alt="Order Sync Agent" 
+            style={styles.logoImage}
+          />
+          <span style={styles.logoText}>Order Sync <span style={styles.logoAccent}>Agent</span></span>
         </div>
         <div style={styles.headerActions}>
           <ThemeToggle />
@@ -607,12 +611,17 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: "center",
     gap: "8px",
   },
-  logoIcon: {
-    fontSize: "20px",
+  logoImage: {
+    height: "24px",
+    width: "auto",
+    display: "block",
   },
   logoText: {
     fontSize: "16px",
     fontWeight: 700,
+  },
+  logoAccent: {
+    color: "#00FFC2",
   },
   headerActions: {
     display: "flex",
