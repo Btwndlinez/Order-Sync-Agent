@@ -1,4 +1,4 @@
-**Status**: 🚀 **FEATURE COMPLETE** (2026-02-13)
+**Status**: 🚀 **FEATURE COMPLETE** (2026-02-14)
 
 ---
 
@@ -22,6 +22,8 @@ npm run deploy            # Deploy extension to GitHub Pages
 - `website/dist-website/terms.html` - Terms of service
 
 ### Status: ✅ **DEPLOYED TO GITHUB PAGES**
+- **Last Deployed**: 2026-02-14
+- **Status**: Live and accessible
 
 ---
 
