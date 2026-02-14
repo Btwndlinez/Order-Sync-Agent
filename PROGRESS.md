@@ -203,6 +203,65 @@ npm run deploy:website # Push dist folder to GitHub Pages
 
 ---
 
+## 2026-02-14 Deployment Architecture Fix (v2) ✅
+
+### Changes Made
+
+#### 1. vite.config.js
+- **base:** `/Order-Sync-Agent/` (already set correctly)
+
+#### 2. Header Logo (LandingPage.tsx)
+```tsx
+<a href="/Order-Sync-Agent/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+  <img 
+    src="/Order-Sync-Agent/assets/sync-logo.svg" 
+    alt="Order Sync Agent" 
+    className="block h-10 w-auto opacity-100"
+  />
+  <span className="text-slate-900 font-bold text-xl">
+    Order Sync <span className="text-[#00FFC2]">Agent</span>
+  </span>
+</a>
+```
+
+#### 3. Footer Logo (LandingPage.tsx)
+```tsx
+<div className="footer-branding">
+  <img 
+    src="/Order-Sync-Agent/assets/sync-logo.svg" 
+    alt="Order Sync Agent" 
+    className="block h-8 w-auto opacity-90 mb-3"
+  />
+  <span className="font-semibold text-xl text-white block mb-3">
+    Order Sync <span className="text-[#00FFC2]">Agent</span>
+  </span>
+</div>
+```
+
+#### 4. Assets Folder
+- Created: `website/public/assets/sync-logo.svg`
+- Copied from: `website/public/logo.svg`
+- Verified in: `dist-website/assets/sync-logo.svg`
+
+### Key Fixes Applied
+- ✅ Absolute path `/Order-Sync-Agent/` for all assets
+- ✅ Logo wrapped in `<a href="/Order-Sync-Agent/">` for proper navigation
+- ✅ `block` class and `opacity-100` on all images
+- ✅ Text updated to "Order Sync Agent" with mint accent
+- ✅ sync-logo.svg verified in build output
+
+### Build & Deploy Commands
+```bash
+npm run build          # Generates dist-website with correct paths
+npm run deploy:website # Pushes to GitHub Pages
+```
+
+### Status: ✅ **DEPLOYMENT ARCHITECTURE FIX COMPLETE**
+- **Live URL:** https://btwndlinez.github.io/Order-Sync-Agent/
+- **Status:** Assets loading correctly
+
+---
+
 ## 2026-02-13 Framer Motion Tab Navigation & Sync Button ✅
 
 ### Installation
