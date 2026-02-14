@@ -24,3 +24,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Plasmo
+.plasmo/
+
+# NPM cache
+.npm-cache-local/
