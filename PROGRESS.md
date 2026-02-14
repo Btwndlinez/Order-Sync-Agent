@@ -344,6 +344,76 @@ npm run deploy:website  # Deploy website
 
 ---
 
+## 2026-02-14 High-Contrast Brand & Legal Disclaimer ✅
+
+### Header Text (High Contrast)
+
+**File:** `website/LandingPage.tsx`
+
+```tsx
+<a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline group">
+  <img src="assets/sync-logo.svg" alt="Order Sync Agent" className="h-10 w-auto block" />
+  <span className="text-xl font-bold tracking-tight" style={{
+    color: 'white',
+    textShadow: '-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000'
+  }}>
+    Order Sync <span style={{ color: '#00FFC2' }}>Agent</span>
+  </span>
+</a>
+```
+
+### Footer (Legal Disclaimer)
+
+**File:** `website/LandingPage.tsx`
+
+```html
+<footer className="max-w-7xl mx-auto mt-24 pt-12 border-t border-white/5 text-center text-gray-500 text-sm">
+  <div className="flex flex-col items-center mb-6">
+    <img src="assets/sync-logo.svg" alt="Order Sync Agent" className="h-8 w-auto mb-3 opacity-90" />
+    <h3 className="text-white font-bold text-lg">Order Sync Agent</h3>
+    <p className="mt-2 text-xs">© 2026 Order Sync Agent. Built for the modern Merchant.</p>
+  </div>
+
+  <div className="max-w-2xl mx-auto px-4">
+    <p className="text-[10px] leading-relaxed opacity-60 uppercase tracking-widest mb-4">Cancel anytime</p>
+    <p className="text-[11px] leading-relaxed opacity-50">
+      Order Sync Agent is not affiliated with Meta, Facebook, or WhatsApp.
+    </p>
+  </div>
+</footer>
+```
+
+### Extension Popup (Text Shadow)
+
+**File:** `extension/popup.tsx`
+
+```tsx
+logoText: {
+  fontSize: "16px",
+  fontWeight: 700,
+  color: "white",
+  textShadow: "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000",
+},
+```
+
+### Key Changes
+- ✅ Header: Black text outline for high contrast on white background
+- ✅ Footer: Updated legal disclaimer "Order Sync Agent is not affiliated with Meta, Facebook, or WhatsApp."
+- ✅ Popup: Added text shadow to logo for consistency
+- ✅ Header link: Wrapped in `<a href="/Order-Sync-Agent/">` for home navigation
+
+### Deploy Commands
+```bash
+npm run deploy        # Extension
+npm run deploy:website  # Website
+```
+
+### Status: ✅ **HIGH-CONTRAST BRAND & LEGAL COMPLETE**
+- **Website:** https://btwndlinez.github.io/Order-Sync-Agent/
+- **Extension:** Deployed to gh-pages branch
+
+---
+
 ## 2026-02-13 Framer Motion Tab Navigation & Sync Button ✅
 
 ### Installation
