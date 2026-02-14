@@ -299,13 +299,13 @@ export default function LandingPage() {
       <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 md:py-4">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center gap-3">
               <img 
-                src="/brand/logo-v1-final.png" 
-                alt="Order Sync Agent Logo" 
-                className="h-9 w-9 md:h-11 md:w-11"
+                src="assets/sync-logo.png" 
+                alt="Order Sync Agent" 
+                className="h-10 w-auto"
               />
-              <span className="font-semibold text-xl text-slate-900">Order Sync Agent</span>
+              <span className="font-semibold text-xl text-slate-900">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
             </div>
 
             {/* Desktop Navigation */}
@@ -542,11 +542,13 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
             <div className="col-span-2 md:col-span-1">
-              <div className="flex items-center space-x-2 mb-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold">OS</span>
-                </div>
-                <span className="font-semibold text-xl text-white">Order Sync Agent</span>
+              <div className="footer-branding">
+                <img 
+                  src="assets/sync-logo.png" 
+                  alt="Order Sync Agent" 
+                  className="h-8 w-auto mb-3 opacity-80"
+                />
+                <span className="font-semibold text-xl text-white block mb-3">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
               </div>
               <p className="text-sm mb-4">
                 Automate customer service data extraction and checkout generation.
@@ -554,6 +556,7 @@ export default function LandingPage() {
               <p className="text-xs text-slate-500">
                 Order Sync Agent is not affiliated with Meta, Facebook, or WhatsApp.
               </p>
+              <p className="text-xs text-gray-500 mt-2">© 2026 Order Sync Agent</p>
             </div>
 
             <div>
