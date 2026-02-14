@@ -1,0 +1,10 @@
+# Secrets and Credentials
+node_modules/
+.env
+client_secret*.json
+*.pem
+
+# Build outputs
+build/
+dist/
+.plasmo/
