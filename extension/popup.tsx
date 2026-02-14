@@ -271,11 +271,11 @@ function PopupContent() {
       <header style={styles.header}>
         <div style={styles.logo}>
           <img 
-            src="../assets/sync-logo.png" 
+            src="../assets/sync-logo.svg" 
             alt="Order Sync Agent" 
             style={styles.logoImage}
           />
-          <span style={styles.logoText}>Order Sync <span style={styles.logoAccent}>Agent</span></span>
+          <span style={styles.logoText}>OrderSync<span style={styles.logoAccent}>Agent</span></span>
         </div>
         <div style={styles.headerActions}>
           <ThemeToggle />

@@ -256,6 +256,38 @@ npm run build          # Generates dist-website with correct paths
 npm run deploy:website # Pushes to GitHub Pages
 ```
 
+### Build & Deploy Steps (IMPORTANT)
+
+```bash
+# 1. Clear out the old broken build
+rm -rf website/dist-website
+
+# 2. Rebuild (Vite will now see the public/assets/sync-logo.png)
+npm run build
+
+# 3. Double check local dist before pushing
+ls website/dist-website/assets/
+# You SHOULD see sync-logo.svg listed now.
+
+# 4. Deploy
+npm run deploy:website 
+```
+
+### Header Logo Example (Correct)
+
+```html
+<a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline">
+  <img 
+    src="/Order-Sync-Agent/assets/sync-logo.svg" 
+    alt="Order Sync Agent" 
+    className="h-10 w-auto block" 
+  />
+  <span className="text-white font-bold text-xl">
+    Order Sync <span className="text-[#00FFC2]">Agent</span>
+  </span>
+</a>
+```
+
 ### Status: ✅ **DEPLOYMENT ARCHITECTURE FIX COMPLETE**
 - **Live URL:** https://btwndlinez.github.io/Order-Sync-Agent/
 - **Status:** Assets loading correctly

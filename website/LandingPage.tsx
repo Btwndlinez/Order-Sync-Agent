@@ -299,15 +299,13 @@ export default function LandingPage() {
       <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 md:py-4">
-            <a href="/Order-Sync-Agent/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline hover:opacity-90 transition-opacity">
               <img 
-                src="/Order-Sync-Agent/assets/sync-logo.svg" 
+                src="assets/sync-logo.svg" 
                 alt="Order Sync Agent" 
-                className="block h-10 w-auto opacity-100"
+                className="block h-10 w-auto"
               />
-              <span className="text-slate-900 font-bold text-xl">
-                Order Sync <span className="text-[#00FFC2]">Agent</span>
-              </span>
+              <span className="text-white font-bold text-xl">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
             </a>
 
             {/* Desktop Navigation */}
@@ -546,11 +544,11 @@ export default function LandingPage() {
             <div className="col-span-2 md:col-span-1">
               <div className="footer-branding">
                 <img 
-                  src="/Order-Sync-Agent/assets/sync-logo.svg" 
+                  src="assets/sync-logo.svg" 
                   alt="Order Sync Agent" 
-                  className="block h-8 w-auto opacity-90 mb-3"
+                  className="block h-8 w-auto"
                 />
-                <span className="font-semibold text-xl text-white block mb-3">Order Sync <span className="text-[#00FFC2]">Agent</span></span>
+                <span className="font-semibold text-xl text-white block mb-3">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
               </div>
               <p className="text-sm mb-4">
                 Automate customer service data extraction and checkout generation.
