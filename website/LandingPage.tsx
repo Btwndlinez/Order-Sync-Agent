@@ -301,12 +301,13 @@ export default function LandingPage() {
           <div className="flex justify-between items-center py-3 md:py-4">
             <a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline group">
               <img 
-                src="assets/sync-logo.svg" 
+                src="assets/sync-logo.png" 
                 alt="Order Sync Agent" 
                 className="block h-10 w-auto"
               />
               <span className="text-xl font-bold tracking-tight" style={{
                 color: 'white',
+                fontWeight: 'bold',
                 textShadow: '-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000'
               }}>
                 Order Sync <span style={{ color: '#00FFC2' }}>Agent</span>
@@ -538,8 +539,10 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="max-w-7xl mx-auto mt-24 pt-12 border-t border-white/5 text-center text-gray-500 text-sm">
         <div className="flex flex-col items-center mb-6">
-          <img src="assets/sync-logo.svg" alt="Order Sync Agent" className="h-8 w-auto mb-3 opacity-90" />
-          <h3 className="text-white font-bold text-lg">Order Sync Agent</h3>
+          <img src="assets/sync-logo.png" alt="Order Sync Agent" className="h-8 w-auto mb-3 opacity-90" />
+          <h3 className="text-white font-bold text-lg" style={{
+            textShadow: '-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000'
+          }}>Order Sync Agent</h3>
           <p className="mt-2 text-xs">© 2026 Order Sync Agent. Built for the modern Merchant.</p>
         </div>
 

@@ -271,7 +271,7 @@ function PopupContent() {
       <header style={styles.header}>
         <div style={styles.logo}>
           <img 
-            src="../assets/sync-logo.svg" 
+            src="../assets/sync-logo.png" 
             alt="Order Sync Agent" 
             style={styles.logoImage}
           />
