@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Order Sync Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        // LocalStorage for essential functional cookies only (Stripe auth tokens)
+        window.addEventListener('DOMContentLoaded', function() {
+            // No cookie consent banner needed - using LocalStorage for auth
+            console.log('Terms: LocalStorage initialized, no cookie consent required');
+        });
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <!-- Rocket Logo -->
+                    <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-emerald-400 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7.14 1 0.001.169 1.409l5-1.429A1 1 0 009.15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5-1.428a1 1 0 001.17-1.408l-7-14A1 1 0 009.15.571z"/>
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xl">Order Sync Agent</span>
+                </div>
+                <a href="/" class="text-indigo-600 hover:text-indigo-700 font-medium">← Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-xl shadow-sm p-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">Terms of Service</h1>
+            
+            <div class="prose max-w-none">
+                <p class="text-gray-600 mb-6">Last updated: February 11, 2026</p>
+                
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-8">
+                    <p class="text-amber-800 font-semibold mb-2">🚀 Important: No Cookie Consent Required</p>
+                    <p class="text-amber-700">Order Sync Agent uses LocalStorage for essential functionality only. No cookie consent banner needed at launch.</p>
+                </div>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Agreement to Terms</h2>
+                <p class="text-gray-600 mb-4">By installing and using Order Sync Agent Chrome extension ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you must not use our Service.</p>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Service Description</h2>
+                <p class="text-gray-600 mb-4">Order Sync Agent is a Chrome extension that helps Facebook Messenger sellers generate checkout links faster by using AI to analyze conversations and match products from your catalog. The Service integrates with Shopify stores and Stripe for payment processing.</p>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Subscription Plans & Usage</h2>
+                <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Available Plans:</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li><strong>Starter:</strong> 20 checkout links per month - Free</li>
+                        <li><strong>Pro:</strong> 200 checkout links per month - $19/month</li>
+                        <li><strong>Scale:</strong> 1,000 checkout links per month - $49/month</li>
+                    </ul>
+                </div>
+                
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Usage Limits</h3>
+                    <p class="text-gray-600 mb-4">Each plan has a monthly limit on checkout links generated. Usage counters reset at the beginning of each billing cycle. Additional links require upgrading to a higher tier.</p>
+                    
+                    <h3 class="text-lg font-semibold text-gray-900">Payment Terms</h3>
+                    <ul class="list-disc pl-6 text-gray-600">
+                        <li><strong>Monthly Billing:</strong> Subscriptions are billed monthly in advance through Stripe.</li>
+                        <li><strong>Refunds:</strong> Refunds are available within 7 days of the initial purchase. No prorated refunds for partial months of service.</li>
+                        <li><strong>Plan Changes:</strong> You can upgrade or downgrade your plan at any time. Changes take effect at the start of the next billing cycle.</li>
+                    </ul>
+                </div>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Acceptable Use</h2>
+                <p class="text-gray-600 mb-4">As a user of Order Sync Agent, you agree to:</p>
+                <ul class="list-disc pl-6 text-gray-600">
+                    <li>Use the Service only for legitimate business transactions on Facebook Messenger</li>
+                    <li>Generate accurate checkout links for products you actually sell</li>
+                    <li>Comply with all applicable laws and Facebook's Terms of Service</li>
+                    <li>Maintain security of your account credentials and not share them</li>
+                    <li>Not attempt to reverse engineer or circumvent Service limitations</li>
+                </ul>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Data & Privacy</h2>
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-blue-900 mb-2">🔒 Privacy-First Approach</h3>
+                    <p class="text-blue-800 mb-2">Your privacy is fundamental to our design:</p>
+                    <ul class="list-disc pl-6 text-blue-800">
+                        <li><strong>LocalStorage Only:</strong> We use LocalStorage for essential functionality to avoid cookie consent banners</li>
+                        <li><strong>No Conversation Content on Servers:</strong> Message analysis happens locally in your browser</li>
+                        <li><strong>Essential Data Only:</strong> Only product catalog and subscription data stored in our cloud database</li>
+                        <li><strong>Secure Payments:</strong> Stripe handles all payment processing - we never see or store credit card information</li>
+                    </ul>
+                </div>
+                
+                <p class="text-gray-600 mb-4"><strong>Your Data:</strong> You retain ownership of all conversation data and customer information. We only process this data to provide the Service.</p>
+                <p class="text-gray-600 mb-4"><strong>Our Intellectual Property:</strong> The Order Sync Agent service, including its algorithms, user interface, and technology, is protected by intellectual property laws.</p>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Service Availability</h2>
+                <p class="text-gray-600 mb-4">We strive to maintain high availability but do not guarantee uninterrupted service. The Service may be temporarily unavailable for maintenance, updates, or technical issues.</p>
+                <ul class="list-disc pl-6 text-gray-600">
+                    <li>Perform maintenance that temporarily affects service</li>
+                    <li>Update features that may change functionality</li>
+                    <li>Discontinue service with 30 days notice for significant changes</li>
+                </ul>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Limitation of Liability</h2>
+                <p class="text-gray-600 mb-4">To the maximum extent permitted by law, Order Sync Agent shall not be liable for any indirect, incidental, special, or consequential damages resulting from your use of the Service.</p>
+                <p class="text-gray-600 mb-4">Our total liability shall not exceed the amount you paid for the Service in the preceding 12 months.</p>
+                <p class="text-gray-600 mb-4">We are not responsible for losses caused by Facebook platform changes, Shopify service interruptions, or Stripe payment processing issues.</p>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Termination</h2>
+                <p class="text-gray-600 mb-4">You may terminate your account at any time by uninstalling the extension or canceling your subscription.</p>
+                <p class="text-gray-600 mb-4">We may terminate or suspend access to the Service for violation of these Terms or for any other reason with appropriate notice.</p>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Changes to Terms</h2>
+                <p class="text-gray-600 mb-4">We reserve the right to modify these Terms at any time. Significant changes will be communicated via email or through the extension interface.</p>
+                <p class="text-gray-600 mb-4">Continued use of the Service after changes constitutes acceptance of the modified Terms.</p>
+                
+                <h2 class="text-2xl font-semibold text-gray-900 mt-8 mb-4">Contact Information</h2>
+                <p class="text-gray-600 mb-4">For questions about these Terms of Service, please contact us:</p>
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <p class="text-gray-800"><strong>Email:</strong> legal@ordersyncagent.com</p>
+                    <p class="text-gray-800"><strong>Website:</strong> https://ordersyncagent.com</p>
+                    <p class="text-gray-800"><strong>Response Time:</strong> We respond to all inquiries within 48 business hours</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <div class="w-6 h-6 bg-gradient-to-br from-indigo-600 to-emerald-400 rounded-lg flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7.14 1 0.001.169 1.409l5-1.429A1 1 0 009.15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5-1.428a1 1 0 001.17-1.408l-7-14A1 1 0 009.15.571z"/>
+                        </svg>
+                    </div>
+                    <span class="text-gray-600">© 2026 Order Sync Agent. All rights reserved.</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="/privacy" class="text-gray-600 hover:text-indigo-600">Privacy Policy</a>
+                    <a href="/terms" class="text-gray-600 hover:text-indigo-600">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
