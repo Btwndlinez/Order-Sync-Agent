@@ -414,7 +414,84 @@ npm run deploy:website  # Website
 
 ---
 
-## 2026-02-13 Framer Motion Tab Navigation & Sync Button ✅
+## 2026-02-14 Version 5 Global Sync ✅
+
+### Version 5 Branding Assets
+
+**Asset Location:**
+- `website/public/assets/sync-logo.png` - Main logo (Version 5)
+- `extension/assets/sync-logo.png` - Extension logo
+- `website/dist-website/assets/sync-logo.png` - Deployed logo
+
+### Header (Version 5)
+
+```tsx
+<a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline group">
+  <img 
+    src="assets/sync-logo.png" 
+    alt="Order Sync Agent" 
+    className="block h-10 w-auto"
+  />
+  <span className="text-xl font-bold tracking-tight" style={{
+    color: 'white',
+    fontWeight: 'bold',
+    textShadow: '-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000'
+  }}>
+    Order Sync <span style={{ color: '#00FFC2' }}>Agent</span>
+  </span>
+</a>
+```
+
+### Footer (Version 5)
+
+```tsx
+<footer className="max-w-7xl mx-auto mt-24 pt-12 border-t border-white/5 text-center text-gray-500 text-sm">
+  <div className="flex flex-col items-center mb-6">
+    <img src="assets/sync-logo.png" alt="Order Sync Agent" className="h-8 w-auto mb-3 opacity-90" />
+    <h3 className="text-white font-bold text-lg" style={{
+      textShadow: '-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000'
+    }}>Order Sync Agent</h3>
+    <p className="mt-2 text-xs">© 2026 Order Sync Agent. Built for the modern Merchant.</p>
+  </div>
+
+  <div className="max-w-2xl mx-auto px-4">
+    <p className="text-[10px] leading-relaxed opacity-60 uppercase tracking-widest mb-4">Cancel anytime</p>
+    <p className="text-[11px] leading-relaxed opacity-50">
+      Order Sync Agent is not affiliated with Meta, Facebook, or WhatsApp.
+    </p>
+  </div>
+</footer>
+```
+
+### Extension Popup (Version 5)
+
+```tsx
+<img 
+  src="../assets/sync-logo.png" 
+  alt="Order Sync Agent" 
+  style={styles.logoImage}
+/>
+```
+
+### Key Changes (Version 5)
+- ✅ Logo: Using `sync-logo.png` (Version 5) in all locations
+- ✅ Header: Black text outline (1.5px) for high contrast
+- ✅ Footer: Updated with text shadow and legal disclaimer
+- ✅ Popup: Using Version 5 logo with proper styling
+- ✅ Path: `assets/sync-logo.png` consistent across all files
+- ✅ Link: `<a href="/Order-Sync-Agent/">` for home navigation
+
+### Deploy Commands
+```bash
+npm run deploy        # Extension
+npm run deploy:website  # Website
+```
+
+### Status: ✅ **VERSION 5 GLOBAL SYNC COMPLETE**
+- **Website:** https://btwndlinez.github.io/Order-Sync-Agent/
+- **Extension:** Deployed to gh-pages branch
+
+---
 
 ### Installation
 
