@@ -294,6 +294,56 @@ npm run deploy:website
 
 ---
 
+## 2026-02-14 Universal Logo & Popup Fix ✅
+
+### Header Logo (LandingPage.tsx)
+
+```html
+<a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline hover:opacity-90 transition-opacity">
+  <img src="assets/sync-logo.svg" alt="Order Sync Agent" className="block h-10 w-auto">
+  <span className="text-white font-bold text-xl">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
+</a>
+```
+
+### Footer Logo (LandingPage.tsx)
+
+```html
+<div className="footer-branding">
+  <img src="assets/sync-logo.svg" alt="Order Sync Agent" className="block h-8 w-auto">
+  <span className="font-semibold text-xl text-white block mb-3">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
+</div>
+```
+
+### Extension Popup (popup.tsx)
+
+```tsx
+<div style={styles.logo}>
+  <img 
+    src="../assets/sync-logo.svg" 
+    alt="Order Sync Agent" 
+    style={styles.logoImage}
+  />
+  <span style={styles.logoText}>OrderSync<span style={styles.logoAccent}>Agent</span></span>
+</div>
+```
+
+### Assets Created
+- `website/public/assets/sync-logo.svg` - Main logo source
+- `extension/assets/sync-logo.svg` - Extension logo
+- `website/dist-website/assets/sync-logo.svg` - Deployed logo
+
+### Deploy Commands
+```bash
+npm run deploy      # Deploy extension
+npm run deploy:website  # Deploy website
+```
+
+### Status: ✅ **UNIVERSAL LOGO FIX COMPLETE**
+- **Website:** https://btwndlinez.github.io/Order-Sync-Agent/
+- **Extension:** Deployed to gh-pages branch
+
+---
+
 ## 2026-02-13 Framer Motion Tab Navigation & Sync Button ✅
 
 ### Installation
