@@ -25,6 +25,46 @@ npm run deploy            # Deploy extension to GitHub Pages
 
 ---
 
+## 2026-02-14 Branding Update ✅
+
+### Updated Website Logo
+
+**File:** `website/LandingPage.tsx`
+
+#### Header Logo
+```tsx
+<div className="flex items-center gap-3">
+  <img 
+    src="assets/sync-logo.png" 
+    alt="Order Sync Agent" 
+    className="h-10 w-auto"
+  />
+  <span className="font-semibold text-xl text-slate-900">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
+</div>
+```
+
+#### Footer Branding
+```tsx
+<div className="footer-branding">
+  <img 
+    src="assets/sync-logo.png" 
+    alt="Order Sync Agent" 
+    className="h-8 w-auto mb-3 opacity-80"
+  />
+  <span className="font-semibold text-xl text-white block mb-3">OrderSync<span className="text-[#00FFC2]">Agent</span></span>
+</div>
+<p className="text-xs text-gray-500 mt-2">© 2026 Order Sync Agent</p>
+```
+
+### Key Updates
+
+- **Logo Source:** `assets/sync-logo.png`
+- **Brand Styling:** Mint accent (#00FFC2) for "Agent" suffix
+- **Footer:** Updated copyright to 2026 with centered branding
+- **Deployed:** Live at https://btwndlinez.github.io/Order-Sync-Agent/
+
+### Status: ✅ **BRANDING UPDATE COMPLETE**
+
 ---
 
 ## 2026-02-13 Framer Motion Tab Navigation & Sync Button ✅
