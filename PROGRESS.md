@@ -1620,10 +1620,145 @@ Ensure `sync-logo.png` (Version 5) is in:
 ### Status: ✅ **DOM RESILIENCE LAYER COMPLETE**
 
 ---
-npm install framer-motion
-# or
-yarn add framer-motion
+
+## 2026-02-14 Multi-Channel Content Scripts (WhatsApp + Messenger) ✅
+
+### 1. WhatsApp Adapter
+
+**File:** `extension/content_scripts/whatsapp.js`
+
+```javascript
+// WhatsApp specific selectors
+const WA_SELECTORS = {
+  chatContainer: '#main',
+  messageRow: '.message-in', // Classes for incoming messages
+  textNode: '.copyable-text span'
+};
+
+const observer = new MutationObserver((mutations) => {
+  const messages = document.querySelectorAll(WA_SELECTORS.messageRow);
+  if (messages.length > 0) {
+    const lastMsg = messages[messages.length - 1];
+    const text = lastMsg.querySelector(WA_SELECTORS.textNode)?.innerText;
+
+    if (text) {
+      chrome.runtime.sendMessage({
+        source: "WHATSAPP",
+        text: text,
+        timestamp: Date.now()
+      });
+    }
+  }
+});
+
+const target = document.querySelector(WA_SELECTORS.chatContainer);
+if (target) observer.observe(target, { childList: true, subtree: true });
 ```
+
+### 2. Messenger Adapter
+
+**File:** `extension/content_scripts/messenger.js`
+
+```javascript
+// Messenger specific selectors
+const MSG_SELECTORS = {
+  chatContainer: '[role="main"]',
+  messageRow: '[role="presentation"]', 
+  textNode: 'span[dir="auto"]'
+};
+
+const observer = new MutationObserver((mutations) => {
+  const messageNodes = document.querySelectorAll(MSG_SELECTORS.textNode);
+  if (messageNodes.length > 0) {
+    const lastText = messageNodes[messageNodes.length - 1].innerText;
+    
+    chrome.runtime.sendMessage({
+      source: "MESSENGER",
+      text: lastText,
+      timestamp: Date.now()
+    });
+  }
+});
+
+const target = document.querySelector(MSG_SELECTORS.chatContainer);
+if (target) observer.observe(target, { childList: true, subtree: true });
+```
+
+### 3. Unified Background Router
+
+**File:** `extension/background.js`
+
+```javascript
+// Intent Keywords from current spec
+const INTENT_KEYWORDS = ["shipping", "total", "address", "order", "price", "pay", "buy", "want"];
+
+function scoreIntent(text) {
+  const lowerText = text.toLowerCase();
+  const hasKeyword = INTENT_KEYWORDS.some(word => lowerText.includes(word));
+  const hasCurrency = /\$?\d+(\.\d{2})?/.test(text); // Basic price detection
+  
+  return {
+    isValid: hasKeyword || hasCurrency,
+    confidence: hasKeyword && hasCurrency ? 0.9 : 0.5
+  };
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.text) {
+    const scoring = scoreIntent(message.text);
+
+    if (scoring.isValid) {
+      // Trigger the "Rabbit Nudge" UI - V5 Mint Accent
+      chrome.action.setBadgeText({ text: "!" });
+      chrome.action.setBadgeBackgroundColor({ color: "#00FFC2" });
+
+      // Relay to Side Panel
+      chrome.runtime.sendMessage({
+        type: "INTENT_SCORE_RESULT",
+        payload: {
+          ...message,
+          confidence: scoring.confidence
+        }
+      });
+    }
+  }
+});
+```
+
+### 4. Manifest Updates
+
+```json
+{
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://www.messenger.com/*",
+    "https://www.facebook.com/messages/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["extension/content_scripts/whatsapp.js"]
+    },
+    {
+      "matches": [
+        "https://www.messenger.com/*",
+        "https://www.facebook.com/messages/*"
+      ],
+      "js": ["extension/content_scripts/messenger.js"]
+    }
+  ]
+}
+```
+
+### Strategic Benefits
+
+- **Maintenance:** If WhatsApp changes UI, edit only `whatsapp.js` - AI scoring untouched
+- **Privacy-First:** Observer only processes newest nodes, not entire chat history
+- **Branding:** Consistent V5 Mint (#00FFC2) badge across platforms
+
+### Status: ✅ **MULTI-CHANNEL CONTENT SCRIPTS COMPLETE**
+
+---
 
 ### 1. TabNav Component with Animated Pill
 
