@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://btwndlinez.github.io/Order-Sync-Agent/sitemap.xml
