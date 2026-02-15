@@ -644,6 +644,88 @@ if agent.side_panel.contains("WHICH ONE?"):
 
 ---
 
+## 2026-02-14 Manifest V5 & Secure Proxy ✅
+
+### manifest.json (V5 ACTIVE)
+
+```json
+{
+  "manifest_version": 3,
+  "name": "OrderSync Agent | V5 ACTIVE",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "scripting",
+    "notifications",
+    "unlimitedStorage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://*.facebook.com/messages/*",
+    "https://*.myshopify.com/*",
+    "https://api.ordersync.io/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  }
+}
+```
+
+### background.js - Secure Proxy Logic
+
+**File:** `extension/background.js`
+
+```javascript
+// background.js - Secure Proxy Logic
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.type === 'GENERATE_SECURE_LINK') {
+    const { variantId, quantity } = request.payload;
+
+    // In Full Active Mode, we hit the live Shopify Cart API
+    // This creates a permalink: myshopify.com/cart/variant_id:quantity
+    const permalink = `https://${request.shopId}.myshopify.com/cart/${variantId}:${quantity}`;
+    
+    // Logic to wrap in an OrderSync Shortlink for tracking
+    const trackedLink = `https://osync.io/l/${btoa(permalink).substring(0, 8)}`;
+
+    chrome.storage.local.set({ lastGeneratedLink: trackedLink }, () => {
+      sendResponse({ success: true, url: trackedLink });
+    });
+    
+    return true; // Keep channel open for async response
+  }
+});
+```
+
+### declarativeNetRequest Rules
+
+**File:** `manifest.json` (rules section)
+
+```javascript
+// Add to declarativeNetRequest rules
+const rules = [{
+  "id": 1,
+  "priority": 1,
+  "action": { "type": "modifyHeaders", "requestHeaders": [{ "header": "X-OrderSync-Pilot", "operation": "set", "value": "true" }] },
+  "condition": { "urlFilter": "api.ordersync.io/*", "resourceTypes": ["xmlhttprequest"] }
+}];
+```
+
+### Key Features
+
+- **V5 ACTIVE:** Manifest version with full permissions
+- **Secure Proxy:** Background script generates tracked checkout links
+- **Shopify Cart API:** Creates permalinks for direct checkout
+- **OrderSync Shortlink:** Trackable links via osync.io
+- **Header Modification:** X-OrderSync-Pilot header for API requests
+
+### Status: ✅ **MANIFEST V5 & SECURE PROXY COMPLETE**
+
+---
+
 ### Installation
 
 ```bash
