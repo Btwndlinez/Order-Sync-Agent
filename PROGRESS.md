@@ -1760,7 +1760,173 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 ---
 
-### 1. TabNav Component with Animated Pill
+## 2026-02-14 Message Parsing Pipeline ✅
+
+### The Three-Stage Pipeline
+
+Converts messy chat strings into structured JSON for link generation.
+
+---
+
+### Stage 1: Intent Extraction (The Noise Filter)
+
+Confirms message is a "Buying Signal" before product lookup.
+
+```javascript
+// Stage 1: Intent Extraction
+const ACTION_VERBS = ['buy', 'want', 'need', 'take', 'order', 'get'];
+const QUANTITY_MARKERS = ['1', '2', '3', '4', '5', 'pair', 'set', 'dozen'];
+
+function extractIntent(text) {
+  const clean = text.toLowerCase().replace(/[^\w\s]/g, '').trim();
+  const words = clean.split(/\s+/);
+  
+  const hasAction = ACTION_VERBS.some(v => words.includes(v));
+  const hasQuantity = QUANTITY_MARKERS.some(m => clean.includes(m));
+  
+  return {
+    isCommerce: hasAction && hasQuantity,
+    action: hasAction ? 'PURCHASE' : 'NONE',
+    rawText: text
+  };
+}
+```
+
+---
+
+### Stage 2: Entity Mapping (The Canonical Match)
+
+Cross-references message against Canonical Product Model with fuzzy matching.
+
+```javascript
+// Stage 2: Entity Mapping
+const COLOR_MAP = {
+  'navy': 'Blue', 'blue': 'Blue', 'light blue': 'Light Blue', 'dark blue': 'Dark Blue',
+  'black': 'Black', 'white': 'White', 'red': 'Red', 'green': 'Green'
+};
+
+const SIZE_MAP = {
+  'xs': 'Extra Small', 's': 'Small', 'm': 'Medium', 
+  'l': 'Large', 'xl': 'Extra Large', 'xxl': '2XL'
+};
+
+function mapEntities(text, products) {
+  const lower = text.toLowerCase();
+  
+  // Extract quantity
+  const qtyMatch = text.match(/(\d+)\s*(?:of|pcs|pieces)?/i);
+  const quantity = qtyMatch ? parseInt(qtyMatch[1]) : 1;
+  
+  // Map attributes
+  const color = Object.keys(COLOR_MAP).find(c => lower.includes(c));
+  const size = Object.keys(SIZE_MAP).find(s => lower.includes(s));
+  
+  // Fuzzy match products
+  const matches = products
+    .map(p => ({ product: p, score: calculateMatchScore(p, { color, size, text: lower }) }))
+    .filter(m => m.score > 0.5)
+    .sort((a, b) => b.score - a.score);
+  
+  return {
+    quantity,
+    color: color ? COLOR_MAP[color] : null,
+    size: size ? SIZE_MAP[size] : null,
+    matches: matches.slice(0, 4),
+    confidence: matches[0]?.score || 0
+  };
+}
+
+function calculateMatchScore(product, { color, size, text }) {
+  let score = 0;
+  const title = product.title.toLowerCase();
+  
+  // Title keyword match
+  const words = text.split(/\s+/).filter(w => w.length > 2);
+  score += words.filter(w => title.includes(w)).length * 0.3;
+  
+  // Color match
+  if (color && title.includes(color)) score += 0.4;
+  
+  // Size match
+  if (size && title.includes(size)) score += 0.3;
+  
+  return Math.min(score, 1);
+}
+```
+
+---
+
+### Stage 3: Validation & Link Generation
+
+Final step before showing the V5 Rabbit Nudge.
+
+```javascript
+// Stage 3: Validation & Link Generation
+async function generateLink(entity, shopId) {
+  const variant = entity.matches[0]?.product?.variants?.find(v => 
+    (!entity.color || v.color === entity.color) && 
+    (!entity.size || v.size === entity.size)
+  );
+  
+  if (!variant) {
+    return { status: 'CONFIDENCE_LOW', needsConfirmation: true };
+  }
+  
+  // Check inventory (if Shopify connected)
+  if (variant.inventory_quantity <= 0) {
+    return { status: 'OUT_OF_STOCK', product: variant };
+  }
+  
+  // Construct checkout URL
+  const link = `https://${shopId}.myshopify.com/cart/${variant.id}:${entity.quantity}`;
+  
+  return {
+    status: 'READY',
+    link,
+    product: entity.matches[0].product,
+    variant,
+    confidence: entity.confidence,
+    requiresConfirmation: entity.confidence < 0.7
+  };
+}
+```
+
+---
+
+### Structured Output Example
+
+```javascript
+{
+  "original_text": "I'll take 2 black hoodies medium",
+  "intent": "PURCHASE",
+  "entities": [
+    {
+      "product_id": "prod_8821",
+      "variant_id": "var_9920", // The specific 'Black / Medium' ID
+      "quantity": 2,
+      "price": 45.00
+    }
+  ],
+  "confidence_score": 0.94, // High confidence = Auto-suggest link
+  "requires_confirmation": false
+}
+```
+
+---
+
+### UX Integration: The "Mascot" Feedback
+
+| Confidence | Mascot Response |
+|------------|-----------------|
+| **0.9+** | V5 Rabbit pops up: *"I found the Black Hoodie (M) for you!"* |
+| **0.7-0.9** | Rabbit shows top 2 matches for selection |
+| **<0.7** | Rabbit asks: *"Which one did they mean? Light Blue or Navy?"* |
+
+---
+
+### Status: ✅ **MESSAGE PARSING PIPELINE COMPLETE**
+
+---
 
 **File:** `components/TabNav.tsx`
 
