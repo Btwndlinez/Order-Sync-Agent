@@ -1283,6 +1283,86 @@ const handleLinkGenerated = async (link) => {
 
 ---
 
+## 2026-02-14 Screen 6: Pro Tier Paywall (Unlimited Unlock) ✅
+
+### 1. Visual Strategy
+
+- **V5 Glow:** Soft `#00FFC2` glow behind pricing card
+- **Mascot:** Rabbit holding "Sync" arrow, helpful not demanding
+- **Header:** "You've reached the Free Limit" with black-outline text
+
+### 2. Pricing Component (Pro Tier)
+
+**File:** `components/ProPaywall.tsx`
+
+```tsx
+<div className="flex flex-col items-center p-6 bg-[#0f172a] rounded-2xl border border-[#00FFC2]/20 relative overflow-hidden">
+  {/* The Glow Effect */}
+  <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#00FFC2]/10 blur-3xl rounded-full" />
+  
+  <img src="assets/sync-logo.png" alt="Rabbit" className="h-16 w-16 mb-4 animate-float" />
+  
+  <h2 className="text-xl font-bold mb-2 text-white text-center" style={{
+    textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+  }}>
+    Unlock Unlimited <span className="text-[#00FFC2]">Syncs</span>
+  </h2>
+  
+  <p className="text-gray-400 text-sm text-center mb-6">
+    You've generated 10/10 links this month. Switch to Pro to keep closing sales on WhatsApp.
+  </p>
+
+  {/* The "Starter" Plan Card */}
+  <div className="w-full bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
+    <div className="flex justify-between items-center mb-2">
+      <span className="font-bold text-white">Starter Plan</span>
+      <span className="text-[#00FFC2] font-bold">$10<span className="text-xs text-gray-500">/mo</span></span>
+    </div>
+    <ul className="text-xs text-gray-400 space-y-2">
+      <li className="flex items-center gap-2">✓ Unlimited AI Link Generation</li>
+      <li className="flex items-center gap-2">✓ Real-time WhatsApp Intent Detection</li>
+      <li className="flex items-center gap-2">✓ Priority Shopify Syncing</li>
+    </ul>
+  </div>
+
+  <button className="w-full py-4 bg-[#00FFC2] text-black font-extrabold rounded-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(0,255,194,0.3)]">
+    UPGRADE NOW
+  </button>
+  
+  <button className="mt-4 text-xs text-gray-500 hover:text-white transition-colors">
+    Manage current plan
+  </button>
+</div>
+```
+
+### 3. CSS Variables
+
+```css
+:root {
+  --brand-mint: #00FFC2;
+  --text-outline: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+```
+
+### 4. Monetization Trigger Logic
+
+| Trigger | Action |
+|---------|--------|
+| **8/10 links** | Usage Meter starts pulsing (soft gate) |
+| **11/10 links** | "Generate" button transforms to "Upgrade to Pro" |
+| **1-click** | "Restore Syncs" button → Stripe payment |
+
+### 5. Implementation Checklist
+
+- [ ] CSS Variable: Define `--brand-mint` and `--text-outline`
+- [ ] Asset Check: V5 Logo + Mascot in `public/assets/`
+- [ ] Pathing: All links point to `/Order-Sync-Agent/`
+- [ ] Disclaimer: "Not affiliated with Meta..." at bottom
+
+### Status: ✅ **PRO PAYWALL SCREEN COMPLETE**
+
+---
+
 ```bash
 npm install framer-motion
 # or
