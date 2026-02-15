@@ -1176,6 +1176,113 @@ export const WhatsAppAssist = () => {
 
 ---
 
+## 2026-02-14 WhatsApp Ghost - Phase 1 Implementation ✅
+
+### Phase 1: The "WhatsApp Ghost" Implementation
+
+#### 1. DOM Watcher (Content Script)
+
+**File:** `extension/content_scripts/whatsapp-ghost.js`
+
+```javascript
+// contentScript.js
+const WHATSAPP_MESSAGE_SELECTOR = '.copyable-text span'; // Target text inside bubbles
+
+const observer = new MutationObserver((mutations) => {
+  const lastMessageNode = document.querySelectorAll(WHATSAPP_MESSAGE_SELECTOR);
+  if (lastMessageNode.length > 0) {
+    const lastText = lastMessageNode[lastMessageNode.length - 1].innerText;
+    
+    // HEURISTIC FILTER: Only trigger if intent words exist
+    const intentWords = ['buy', 'price', 'size', 'want', 'order', 'available'];
+    const hasIntent = intentWords.some(word => lastText.toLowerCase().includes(word));
+
+    if (hasIntent) {
+      chrome.runtime.sendMessage({
+        type: "INTENT_DETECTED",
+        payload: { text: lastText }
+      });
+    }
+  }
+});
+
+// Start observing the chat container
+observer.observe(document.body, { childList: true, subtree: true });
+```
+
+#### 2. The "Rabbit Nudge" UI (FAB)
+
+When intent is detected:
+- **State:** `INTENT_DETECTED`
+- **Visual:** V5 Sync Bubble pulses with `#00FFC2` (Mint) outer glow
+- **Action:** Click opens panel with message pre-filled
+
+```javascript
+// Rabbit Nudge Component
+const RabbitNudge = ({ isVisible, onClick }) => (
+  <motion.button
+    animate={{ scale: isVisible ? [1, 1.1, 1] : 1 }}
+    transition={{ repeat: isVisible ? Infinity : 0, duration: 1.5 }}
+    onClick={onClick}
+    className="fixed bottom-8 right-8 z-50"
+    style={{
+      boxShadow: isVisible ? '0 0 20px #00FFC2' : 'none'
+    }}
+  >
+    <img src="assets/sync-logo.png" alt="Order Sync" className="w-12 h-12" />
+  </motion.button>
+);
+```
+
+#### 3. V5 High-Contrast Style in WhatsApp DOM
+
+All injected elements use black text-shadow for readability:
+
+```css
+/* Injected FAB styles */
+.whatsapp-ghost-fab {
+  /* High contrast text */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* Mint accent */
+.whatsapp-ghost-fab .accent {
+  color: #00FFC2;
+}
+```
+
+#### 4. Success State (Auto-Copy)
+
+When link is generated:
+1. **Rabbit Success:** Mascot does quick "sync" spin
+2. **Auto-Copy:** Link copied to clipboard
+3. **Toast:** "Link copied! Paste in chat to close the sale."
+
+```javascript
+const handleLinkGenerated = async (link) => {
+  await navigator.clipboard.writeText(link);
+  
+  // Rabbit success animation
+  setRabbitState('success');
+  
+  // Show toast
+  showToast("Link copied! Paste in chat to close the sale.");
+  
+  setTimeout(() => setRabbitState('idle'), 2000);
+};
+```
+
+### Why This Approach Wins
+
+1. **Safety:** Passive detection - only watches most recent message
+2. **Conversion:** Reduced workflow: Click Pulse → Click Generate
+3. **Monetization:** Auto-Detection can be Pro Tier feature
+4. **V5 Branding:** High-contrast styles work on any WhatsApp theme
+
+### Status: ✅ **WHATSAPP GHOST PHASE 1 COMPLETE**
+
+---
+
 ```bash
 npm install framer-motion
 # or
