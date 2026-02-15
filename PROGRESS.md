@@ -560,6 +560,90 @@ agent.generate_report("Full_Active_Pilot_Log.json")
 
 ---
 
+## 2026-02-14 Ambiguity Resolution & Selection Matrix ✅
+
+### Matcher.js Ambiguity Logic
+
+**File:** `utils/matcher.js`
+
+```javascript
+// Add to matcher.js logic
+if (confidence < 0.75 && results.length > 1) {
+  return {
+    type: 'AMBIGUOUS',
+    confidence,
+    primary: results[0], // Highest score but not high enough to auto-link
+    candidates: results.slice(0, 4), // The grid items
+    instruction: "We found a few options. Which one?"
+  };
+}
+```
+
+### SelectionMatrix Component
+
+**File:** `components/SelectionMatrix.tsx`
+
+```tsx
+export const SelectionMatrix = ({ candidates, onComplete }) => {
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-2">
+        {candidates.map((product) => (
+          <div 
+            key={product.id}
+            className="group relative bg-white/5 border border-white/10 rounded-xl p-2 hover:border-[#00FFC2] transition-all cursor-pointer"
+            onClick={() => onComplete(product, product.variants[0])}
+          >
+            <div className="aspect-square rounded-md bg-white/10 mb-2 overflow-hidden">
+              <img src={product.image} className="w-full h-full object-cover" />
+            </div>
+            <p className="text-[10px] font-bold text-white truncate">{product.title}</p>
+            
+            {/* Quick-Variant Selection Overlay */}
+            <div className="flex gap-1 mt-2 overflow-x-auto pb-1 no-scrollbar">
+              {product.variants.slice(0, 3).map(v => (
+                <button
+                  key={v.id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onComplete(product, v);
+                  }}
+                  className="text-[8px] bg-white/10 px-1.5 py-0.5 rounded-sm hover:bg-[#00FFC2] hover:text-black"
+                >
+                  {v.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="text-[9px] text-center text-white/30 italic">Pickle Stress Test Active: Selection required</p>
+    </div>
+  );
+};
+```
+
+### Pickle Resolution Logic
+
+```python
+# Pickle Resolution Logic
+if agent.side_panel.contains("WHICH ONE?"):
+    # Select the first candidate in the grid (The 'Primary' Match)
+    agent.side_panel.click_element(".selection-matrix-item:first-child")
+    print("⚠️ Ambiguity Handled: Selected Primary Match.")
+```
+
+### Key Features
+
+- **Ambiguity Detection:** Returns `AMBIGUOUS` type when confidence < 0.75 and multiple results
+- **Selection Matrix:** Grid UI for choosing between candidates
+- **Quick-Variant:** Hover overlay for fast variant selection
+- **Pickle Automation:** Auto-selects primary match when ambiguous
+
+### Status: ✅ **AMBIGUITY RESOLUTION COMPLETE**
+
+---
+
 ### Installation
 
 ```bash
