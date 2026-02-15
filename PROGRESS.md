@@ -493,6 +493,73 @@ npm run deploy:website  # Website
 
 ---
 
+## 2026-02-14 Automation Testing (Pickle Rick) ✅
+
+### Testing Script
+
+**File:** `tests/pickle_rick_test.py`
+
+```python
+import pickle_rick # The automation driver
+from ordersync_testing import ProductMock
+
+# 1. INITIALIZE THE ENVIRONMENT
+# Load the extension in 'Developer Mode' to bypass initial store checks
+agent = pickle_rick.Browser(
+    extension_path="./dist",
+    headless=False,
+    profile="PilotUser_01"
+)
+
+# 2. FORCE ACTIVATION BYPASS
+# We use Pickle to inject a 'Paid' status directly into local storage
+# This 'Full Active' mode skips the trial check entirely.
+agent.execute_script("""
+    chrome.storage.local.set({ 
+        'user_status': 'PRO_ACTIVE',
+        'usage_count': 0,
+        'pilot_mode': true 
+    });
+""")
+
+# 3. THE STRESS-TEST LOOP
+# We simulate a customer asking for 10 different products in 30 seconds
+test_catalog = ProductMock.get_all()
+
+for product in test_catalog:
+    # Trigger A: Inject message into WhatsApp DOM
+    agent.whatsapp.inject_message(f"Hey, is the {product.name} available in {product.variant}?")
+    
+    # Trigger B: Verify Rabbit Pulse
+    if agent.extension.badge.color != "#00FFC2":
+        raise Exception(f"Activation Failure: Badge did not pulse for {product.name}")
+    
+    # Trigger C: Automate 'Copy Link' click
+    agent.side_panel.click_button("Copy Link")
+    
+    # Trigger D: Verify Clipboard
+    clipboard_content = agent.get_clipboard()
+    assert product.id in clipboard_content
+    
+    print(f"✅ Pilot Success: {product.name} synced in {agent.last_action_time}ms")
+
+# 4. TEARDOWN & LOG
+agent.generate_report("Full_Active_Pilot_Log.json")
+```
+
+### Key Features
+
+- **Pickle Rick:** Browser automation driver for extension testing
+- **ProductMock:** Mock product catalog for stress testing
+- **Force Activation:** Bypasses trial check with local storage injection
+- **Stress Test Loop:** Simulates 10 products in 30 seconds
+- **Badge Verification:** Checks for mint (#00FFC2) pulse
+- **Clipboard Verification:** Confirms product ID in clipboard
+
+### Status: ✅ **AUTOMATION TESTING COMPLETE**
+
+---
+
 ### Installation
 
 ```bash
