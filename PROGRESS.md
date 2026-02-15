@@ -1503,7 +1503,123 @@ chrome.runtime.onMessage.addListener((message) => {
 
 ---
 
-```bash
+## 2026-02-14 DOM Targeting & Resilience Layer ✅
+
+### 1. The Adapter Contract (The Pattern)
+
+Each adapter uses "Search & Verify" strategy rather than hard-coded classes.
+
+#### WhatsApp Adapter (`whatsapp.js`)
+
+- **Primary Target:** `[role="row"]` or `.copyable-text`
+- **Verification:** Does the node contain a span with actual text?
+- **Resilience:** If primary fails, look for parent of `time` stamp
+
+#### Messenger Adapter (`messenger.js`)
+
+- **Primary Target:** `[role="main"] [role="grid"]` or `div[dir="auto"]`
+- **Verification:** Exclude "Seen" receipts or timestamps
+- **Resilience:** Look for deepest nested `div` with >3 characters
+
+### 2. Shared Utility: findTextNode.js
+
+```javascript
+// Shared Utility: findTextNode.js
+export const getCleanText = (node) => {
+  // Ignore images, emojis-only, or system messages
+  const text = node.innerText || node.textContent;
+  return text.replace(/[\u1100-\u11FF]/g, '').trim(); // Basic cleanup
+};
+
+// WhatsApp Specific Implementation
+const waSelector = {
+  container: '#main',
+  message: '.message-in' // Standard for incoming
+};
+
+// Messenger Specific Implementation
+const msgSelector = {
+  container: '[role="main"]',
+  message: '[aria-label="Messages"] [role="row"]'
+};
+```
+
+### 3. The "Rabbit Nudge" Component (V5 UI Injection)
+
+Using Shadow DOM to prevent platform CSS from breaking our branding.
+
+**The Logic:**
+1. **Detect Intent:** Heuristics trigger
+2. **Inject FAB:** Floating V5 Sync Bubble appears next to detected message
+3. **The Style:**
+   - **Background:** White (to pop against dark modes)
+   - **Border:** 1.5px Solid Black
+   - **Icon:** `assets/sync-logo.png`
+   - **Text:** "Sync?" with signature `text-shadow` outline
+
+```javascript
+// Inject Shadow DOM FAB
+const injectRabbitNudge = (targetNode) => {
+  const host = document.createElement('div');
+  host.style.cssText = 'position: absolute; right: -40px; top: 0;';
+  
+  const shadow = host.attachShadow({ mode: 'open' });
+  shadow.innerHTML = `
+    <style>
+      .rabbit-nudge {
+        background: white;
+        border: 1.5px solid black;
+        border-radius: 8px;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-family: system-ui, sans-serif;
+        font-size: 11px;
+        color: black;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+      }
+    </style>
+    <img src="assets/sync-logo.png" width="24" height="24" />
+    <span class="rabbit-nudge">Sync?</span>
+  `;
+  
+  targetNode.appendChild(host);
+  return host;
+};
+```
+
+### 4. Failure Recovery State
+
+If Meta updates code and selectors return `null`:
+
+- **Icon Turns Yellow:** Warning state
+- **Confused Mascot:** Rabbit appears with "Meta updated their site. Click to recalibrate."
+- **Manual Fallback:** User highlights text manually - never stuck
+
+```javascript
+// Recovery handler
+const handleSelectorFailure = () => {
+  chrome.action.setBadgeText({ text: "?" });
+  chrome.action.setBadgeBackgroundColor({ color: "#FFB800" }); // Yellow warning
+  
+  // Show recovery UI
+  showRecoveryModal({
+    title: "Site Updated",
+    message: "Meta updated their site. Click to recalibrate.",
+    action: "Recalibrate Selectors"
+  });
+};
+```
+
+### 5. V5 Logo Consistency Check
+
+Ensure `sync-logo.png` (Version 5) is in:
+- `website/public/assets/` - For website
+- `extension/assets/` - For extension
+- Bundled in `public/assets` during build
+
+### Status: ✅ **DOM RESILIENCE LAYER COMPLETE**
+
+---
 npm install framer-motion
 # or
 yarn add framer-motion
