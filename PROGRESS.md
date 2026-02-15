@@ -726,7 +726,308 @@ const rules = [{
 
 ---
 
-### Installation
+## 2026-02-14 Channel Assist - Component Hierarchy & State Model ✅
+
+### 1. Component Hierarchy
+
+#### Shared Layout Wrapper
+
+**File:** `components/LayoutWrapper.tsx`
+
+```tsx
+import { Version5Header } from './Version5Header';
+import { RabbitMascot } from './RabbitMascot';
+
+export const LayoutWrapper = ({ children, state }) => {
+  return (
+    <div className="min-h-screen bg-slate-900">
+      <Version5Header /> {/* V5 Header with black-outlined text */}
+      <main className="pt-16">
+        {children}
+      </main>
+      {state === 'extracting' && <RabbitMascot animation="thinking" />}
+    </div>
+  );
+};
+```
+
+#### Version5Header Component
+
+```tsx
+export const Version5Header = () => (
+  <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200">
+    <a href="/Order-Sync-Agent/" className="flex items-center gap-3 no-underline">
+      <img src="assets/sync-logo.png" alt="Order Sync Agent" className="block h-10 w-auto" />
+      <span style={{
+        color: 'white',
+        fontWeight: 'bold',
+        textShadow: '-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000'
+      }}>
+        Order Sync <span style={{ color: '#00FFC2' }}>Agent</span>
+      </span>
+    </a>
+  </header>
+);
+```
+
+#### IntentEngine Component
+
+**File:** `components/IntentEngine.tsx`
+
+```tsx
+export const IntentEngine = ({ onExtract, mode = 'sidepanel' }) => {
+  const [message, setMessage] = useState('');
+  
+  return (
+    <div className={`${mode === 'dashboard' ? 'p-6' : 'p-3'}`}>
+      <textarea
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Paste customer message..."
+        className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white"
+      />
+      <button 
+        onClick={() => onExtract(message)}
+        className="mt-3 w-full bg-[#00FFC2] text-black font-bold py-3 rounded-xl hover:scale-[1.02] transition-transform"
+      >
+        ⚡ Extract Order
+      </button>
+    </div>
+  );
+};
+```
+
+#### LinkGenerator Molecule
+
+**File:** `components/LinkGenerator.tsx`
+
+```tsx
+import { motion } from 'framer-motion';
+
+export const LinkGenerator = ({ product, variant, onCopy, onOpen }) => {
+  const link = `https://shop.com/cart/${variant.id}:1`;
+  
+  return (
+    <motion.div 
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="bg-white/10 border border-white/20 rounded-xl p-4"
+    >
+      <img src={product.image} alt={product.title} className="w-full h-32 object-cover rounded-lg mb-3" />
+      <p className="text-white font-bold text-sm truncate">{product.title}</p>
+      <p className="text-[#00FFC2] text-xs mb-3">{variant.label} - ${variant.price}</p>
+      
+      <div className="flex gap-2">
+        <button 
+          onClick={() => navigator.clipboard.writeText(link) || onCopy()}
+          className="flex-1 bg-[#00FFC2] text-black font-bold py-2 rounded-lg text-sm"
+        >
+          📋 Copy Link
+        </button>
+        <button 
+          onClick={() => window.open(link, '_blank')}
+          className="px-4 border border-white/20 text-white rounded-lg text-sm hover:bg-white/10"
+        >
+          Open
+        </button>
+      </div>
+    </motion.div>
+  );
+};
+```
+
+### 2. State Model (The "Brain")
+
+#### CatalogState
+
+```typescript
+type CatalogStatus = 'idle' | 'syncing' | 'uploading' | 'ready' | 'error';
+
+interface CatalogState {
+  status: CatalogStatus;
+  products: CanonicalProduct[];
+  lastSyncedAt: string | null;
+  error: string | null;
+}
+```
+
+#### AssistState
+
+```typescript
+type AssistStatus = 'idle' | 'extracting' | 'selection' | 'generated';
+
+interface AssistState {
+  status: AssistStatus;
+  message: string;
+  suggestions: CanonicalProduct[];
+  selectedProduct: CanonicalProduct | null;
+  generatedLink: string | null;
+}
+```
+
+#### UsageState
+
+```typescript
+interface UsageState {
+  linksUsed: number;
+  linksLimit: number;
+  isTrial: boolean;
+  shouldPromptUpgrade: boolean;
+}
+```
+
+### 3. Data Flow
+
+#### Canonical Product Model → Suggestions
+
+```typescript
+interface CanonicalProduct {
+  id: string;
+  sku: string;
+  title: string;
+  description: string;
+  price: number;
+  image: string;
+  variants: ProductVariant[];
+  shopId: string;
+  metadata: Record<string, any>;
+}
+```
+
+#### Fuzzy Match Helper
+
+**File:** `utils/fuzzyMatch.ts`
+
+```typescript
+export const fuzzyMatch = (query: string, products: CanonicalProduct[]): CanonicalProduct[] => {
+  const normalizedQuery = query.toLowerCase().replace(/[^a-z0-9]/g, '');
+  
+  return products
+    .map(product => {
+      const score = calculateMatchScore(normalizedQuery, product);
+      return { product, score };
+    })
+    .filter(({ score }) => score > 0.5)
+    .sort((a, b) => b.score - a.score)
+    .map(({ product }) => product);
+};
+
+const calculateMatchScore = (query: string, product: CanonicalProduct): number => {
+  // Token overlap + variant matching + price proximity
+  let score = 0;
+  const productText = `${product.title} ${product.sku}`.toLowerCase();
+  
+  // Title match
+  const titleMatches = query.split(' ').filter(word => productText.includes(word)).length;
+  score += titleMatches * 0.4;
+  
+  // SKU exact match
+  if (product.sku.toLowerCase().includes(query)) score += 0.5;
+  
+  return Math.min(score, 1);
+};
+```
+
+### 4. V5 UI Integration
+
+#### Black Outline CSS Utility
+
+```css
+/* styles/v5-utilities.css */
+.outline-text {
+  color: white;
+  font-weight: bold;
+  text-shadow: 
+    -1.5px -1.5px 0 #000,
+    1.5px -1.5px 0 #000,
+    -1.5px 1.5px 0 #000,
+    1.5px 1.5px 0 #000;
+}
+
+.outline-text-mint {
+  color: #00FFC2;
+  font-weight: bold;
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+```
+
+#### Premium Spring Button Animation
+
+```tsx
+import { motion } from 'framer-motion';
+
+const springTransition = {
+  type: "spring",
+  stiffness: 400,
+  damping: 20
+};
+
+export const PremiumButton = ({ children, onClick, variant = 'primary' }) => (
+  <motion.button
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.95 }}
+    transition={springTransition}
+    onClick={onClick}
+    className={`px-6 py-3 rounded-xl font-bold ${
+      variant === 'primary' 
+        ? 'bg-[#00FFC2] text-black' 
+        : 'bg-white/10 text-white border border-white/20'
+    }`}
+  >
+    {children}
+  </motion.button>
+);
+```
+
+### 5. Mascot State Animations
+
+```tsx
+// RabbitMascot component with state-based animations
+
+export const RabbitMascot = ({ animation = 'idle', message }) => {
+  const variants = {
+    idle: { y: [0, -5, 0], transition: { repeat: Infinity, duration: 2 } },
+    thinking: { rotate: [0, -5, 5, 0], transition: { repeat: Infinity, duration: 1 } },
+    success: { scale: [1, 1.2, 1], transition: { duration: 0.5 } },
+    error: { x: [-5, 5, -5, 5, 0], transition: { duration: 0.4 } }
+  };
+  
+  return (
+    <motion.div 
+      animate={variants[animation]}
+      className="fixed bottom-8 right-8 z-50"
+    >
+      <img src="assets/sync-logo.png" alt="Rabbit" className="w-16 h-16" />
+      {message && (
+        <div className="absolute bottom-full mb-2 bg-black/80 text-white text-xs px-3 py-1 rounded-lg whitespace-nowrap">
+          {message}
+        </div>
+      )}
+    </motion.div>
+  );
+};
+```
+
+### Key Components Summary
+
+| Component | Purpose | Location |
+|-----------|---------|----------|
+| LayoutWrapper | Persistent V5 header + mascot container | `components/LayoutWrapper.tsx` |
+| Version5Header | Black-outlined branding | `components/Version5Header.tsx` |
+| IntentEngine | Message input + extraction | `components/IntentEngine.tsx` |
+| LinkGenerator | Product card + copy/open actions | `components/LinkGenerator.tsx` |
+| RabbitMascot | State-aware mascot animations | `components/RabbitMascot.tsx` |
+| CatalogState | Product sync status tracking | `store/catalogStore.ts` |
+| AssistState | Message → link flow | `store/assistStore.ts` |
+| UsageState | 10-link limit tracking | `store/usageStore.ts` |
+
+### Status: ✅ **COMPONENT HIERARCHY & STATE MODEL COMPLETE**
+
+---
 
 ```bash
 npm install framer-motion
