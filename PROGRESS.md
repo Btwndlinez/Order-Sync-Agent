@@ -1363,6 +1363,146 @@ const handleLinkGenerated = async (link) => {
 
 ---
 
+## 2026-02-14 Production Files - WhatsApp Rabbit Nudge Engine ✅
+
+### 1. manifest.json (The Foundation)
+
+**File:** `extension/manifest.json`
+
+```json
+{
+  "manifest_version": 3,
+  "name": "OrderSync Agent",
+  "version": "0.1.0",
+  "description": "The 1-Click Shopify Bridge for WhatsApp sellers.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Open OrderSync Agent"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["content.js"],
+      "css": ["rabbit-nudge.css"]
+    }
+  ],
+  "icons": {
+    "16": "assets/icon-16.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  }
+}
+```
+
+### 2. content.js (The WhatsApp "Eyes")
+
+**File:** `extension/content.js`
+
+```javascript
+// Keywords that signal purchase intent
+const INTENT_KEYWORDS = ['buy', 'price', 'size', 'want', 'order', 'available', '$', 'ship'];
+
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.addedNodes.length) {
+      const newText = mutation.addedNodes[0].textContent?.toLowerCase() || "";
+      const hasIntent = INTENT_KEYWORDS.some(word => newText.includes(word));
+
+      if (hasIntent) {
+        // Notify the background worker to pulse the icon
+        chrome.runtime.sendMessage({ type: "INTENT_DETECTED", payload: newText });
+        
+        // Visual indicator in the chat (The Rabbit Hint)
+        const target = mutation.target;
+        if (target && target.classList) {
+          target.setAttribute("data-rabbit-hint", "true");
+        }
+      }
+    }
+  });
+});
+
+// Target the main WhatsApp chat container
+const chatContainer = document.querySelector('#main');
+if (chatContainer) {
+  observer.observe(chatContainer, { childList: true, subtree: true });
+}
+```
+
+### 3. rabbit-nudge.css (The V5 Aesthetic)
+
+**File:** `extension/rabbit-nudge.css`
+
+```css
+/* The Rabbit Hint */
+[data-rabbit-hint="true"]::after {
+  content: "🐰 Ready to Sync";
+  font-size: 10px;
+  color: #00FFC2; /* Version 5 Mint Accent */
+  margin-left: 8px;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  opacity: 0.9;
+  animation: pulse-mint 2s infinite;
+}
+
+@keyframes pulse-mint {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+```
+
+### 4. background.js (The Relay)
+
+**File:** `extension/background.js`
+
+```javascript
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
+
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.type === "INTENT_DETECTED") {
+    // Show a Mint pulse on the extension icon
+    chrome.action.setBadgeText({ text: "!" });
+    chrome.action.setBadgeBackgroundColor({ color: "#00FFC2" });
+    
+    // Clear badge after 8 seconds
+    setTimeout(() => {
+      chrome.action.setBadgeText({ text: "" });
+    }, 8000);
+  }
+});
+```
+
+### Next Steps for Testing
+
+1. **Open Chrome Extensions** (`chrome://extensions/`)
+2. **Enable Developer Mode** (top right)
+3. **Load Unpacked** and select your `extension` folder
+4. **Open WhatsApp Web** and message "Price"
+5. **Watch the Rabbit peek out**
+
+### Status: ✅ **WHATSAPP ALPHA - FEATURE COMPLETE**
+
+---
+
 ```bash
 npm install framer-motion
 # or
