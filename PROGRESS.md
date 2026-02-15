@@ -1029,6 +1029,153 @@ export const RabbitMascot = ({ animation = 'idle', message }) => {
 
 ---
 
+## 2026-02-14 WhatsApp Assist Panel - Thin Slice (V1) ✅
+
+### 1. State Model (The "Brain")
+
+**File:** `src/store/useStore.ts`
+
+```typescript
+import { create } from 'zustand';
+
+interface AppState {
+  view: 'onboarding' | 'assist' | 'settings';
+  status: 'idle' | 'extracting' | 'generated';
+  message: string;
+  generatedLink: string | null;
+  usageCount: number;
+  
+  // Actions
+  setMessage: (msg: string) => void;
+  processMessage: () => void;
+  reset: () => void;
+}
+
+export const useStore = create<AppState>((set) => ({
+  view: 'assist',
+  status: 'idle',
+  message: '',
+  generatedLink: null,
+  usageCount: 8, // Mocking Screen 5 usage
+
+  setMessage: (message) => set({ message }),
+  
+  processMessage: () => {
+    set({ status: 'extracting' });
+    // Simulate the "Magic Moment" interaction timing (1.5s)
+    setTimeout(() => {
+      set({ 
+        status: 'generated', 
+        generatedLink: 'ordersync.link/ax72ka' 
+      });
+    }, 1500);
+  },
+
+  reset: () => set({ status: 'idle', message: '', generatedLink: null }),
+}));
+```
+
+### 2. The Component (The "Shell")
+
+**File:** `components/WhatsAppAssist.tsx`
+
+```tsx
+import React from 'react';
+import { useStore } from './useStore';
+import { motion, AnimatePresence } from 'framer-motion';
+
+export const WhatsAppAssist = () => {
+  const { status, message, setMessage, processMessage, generatedLink, usageCount } = useStore();
+
+  return (
+    <div className="min-h-screen bg-[#0f172a] text-white p-4 font-sans">
+      {/* V5 HIGH-CONTRAST HEADER */}
+      <header className="flex items-center gap-3 mb-8">
+        <img src="assets/sync-logo.png" alt="V5 Logo" className="h-8 w-8" />
+        <h1 className="text-xl font-bold" style={{
+          textShadow: '-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000'
+        }}>
+          Order Sync <span className="text-[#00FFC2]">Agent</span>
+        </h1>
+      </header>
+
+      <main className="space-y-6">
+        {/* INPUT PANEL */}
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+          <label className="text-xs text-gray-400 uppercase tracking-widest mb-2 block">Paste WhatsApp Message</label>
+          <textarea 
+            className="w-full bg-transparent border-none focus:ring-0 text-sm h-24 resize-none"
+            placeholder="Example: 'I'll take the black hoodie medium...'"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <button 
+            onClick={processMessage}
+            disabled={!message || status !== 'idle'}
+            className="w-full py-3 rounded-lg bg-[#00FFC2] text-black font-bold transition-transform active:scale-95"
+          >
+            {status === 'idle' ? 'Analyze & Generate' : 'Thinking...'}
+          </button>
+        </div>
+
+        {/* MASCOT "THINKING" STATE */}
+        <AnimatePresence>
+          {status === 'extracting' && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col items-center py-8"
+            >
+              <img src="assets/sync-logo.png" alt="Rabbit" className="h-24 w-24 animate-bounce" />
+              <p className="text-[#00FFC2] text-sm font-medium mt-4">Rabbit is parsing variants...</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* GENERATED LINK PANEL */}
+        {status === 'generated' && (
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-[#00FFC2]/10 border border-[#00FFC2]/30 rounded-xl p-4 text-center">
+            <p className="text-xs text-[#00FFC2] mb-2 uppercase">Ready to Send</p>
+            <div className="text-lg font-mono mb-4 text-white">{generatedLink}</div>
+            <button className="bg-white text-black px-6 py-2 rounded-full font-bold text-sm">Copy Link</button>
+          </motion.div>
+        )}
+
+        {/* USAGE METER (MONETIZATION TRIGGER) */}
+        <div className="pt-8">
+          <div className="flex justify-between text-[10px] text-gray-500 mb-1">
+            <span>{usageCount}/10 FREE LINKS</span>
+            <span className="text-[#00FFC2]">UPGRADE</span>
+          </div>
+          <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+            <div className="h-full bg-[#00FFC2]" style={{ width: `${(usageCount / 10) * 100}%` }} />
+          </div>
+        </div>
+      </main>
+
+      {/* FOOTER DISCLAIMER */}
+      <footer className="mt-auto pt-12 text-center">
+        <p className="text-[10px] text-gray-600">
+          Order Sync Agent is not affiliated with Meta, Facebook, or WhatsApp.
+        </p>
+      </footer>
+    </div>
+  );
+};
+```
+
+### Why This "Thin Slice" is Ready
+
+1. **Correct Branding:** High-contrast text styles + V5 logo paths
+2. **Mascot Functional:** Rabbit as a "Loader" during processing
+3. **Monetization Hook:** Usage Meter visible from day one
+4. **No Tech Debt:** Centralized store, easy to swap mock for real API later
+
+### Status: ✅ **THIN SLICE V1 COMPLETE**
+
+---
+
 ```bash
 npm install framer-motion
 # or
